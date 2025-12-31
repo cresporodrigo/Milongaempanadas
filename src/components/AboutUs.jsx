@@ -5,7 +5,7 @@ const AboutUs = () => {
   return (
     <section id="about" className="section-padding bg-cream">
       <div className="container-custom">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+        <div className="grid md:grid-cols-2 gap-8 items-center">
           {/* Text Content */}
           <div className="space-y-6">
             <h2 className="heading-lg text-primary-dark mb-6">

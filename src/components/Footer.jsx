@@ -34,9 +34,9 @@ const Footer = ({ openLocationModal }) => {
   }
 
   return (
-    <footer id="contact" className="bg-footer text-white py-16">
+    <footer id="contact" className="bg-footer text-white py-12">
       <div className="container-custom">
-        <div className="grid md:grid-cols-4 gap-12 mb-12">
+        <div className="grid md:grid-cols-4 gap-8 mb-8">
           {/* Logo and Description */}
           <div className="space-y-4">
             <Link
@@ -225,7 +225,7 @@ const Footer = ({ openLocationModal }) => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-gray-800 pt-8 text-center">
+        <div className="border-t border-gray-800 pt-6 text-center">
           <p className="text-gray-400">
             &copy; 2025 Milonga Empanadas. All Rights Reserved.
           </p>

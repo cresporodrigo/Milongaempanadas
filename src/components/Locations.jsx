@@ -3,7 +3,7 @@ import { getAssetPath } from '../config'
 
 const LocationCard = ({ name, address, hours, image, mapsUrl }) => {
   return (
-    <div className="bg-white rounded-xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+    <div className="bg-white rounded-xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 flex flex-col h-full">
       {/* Location Image */}
       <div className="h-64 overflow-hidden">
         <img
@@ -15,7 +15,7 @@ const LocationCard = ({ name, address, hours, image, mapsUrl }) => {
       </div>
 
       {/* Location Details */}
-      <div className="p-8 space-y-4">
+      <div className="p-8 space-y-4 flex-grow flex flex-col">
         <h3 className="text-2xl font-heading font-bold text-primary-dark">
           {name}
         </h3>
@@ -29,7 +29,7 @@ const LocationCard = ({ name, address, hours, image, mapsUrl }) => {
         </div>
 
         {/* Hours */}
-        <div className="space-y-2">
+        <div className="space-y-2 flex-grow">
           <div className="flex items-center space-x-3">
             <svg className="w-6 h-6 text-teal-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
               <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd"/>
@@ -48,7 +48,7 @@ const LocationCard = ({ name, address, hours, image, mapsUrl }) => {
           href={mapsUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="block w-full text-center btn-primary mt-6"
+          className="block w-full text-center btn-primary mt-auto"
         >
           Get Directions
         </a>
@@ -86,8 +86,8 @@ const Locations = () => {
   return (
     <section id="locations" className="section-padding bg-white">
       <div className="container-custom">
-        <div className="text-center mb-12">
-          <h2 className="heading-lg text-primary-dark mb-4">
+        <div className="text-center mb-8">
+          <h2 className="heading-lg text-primary-dark mb-3">
             Locations
           </h2>
           <p className="text-body text-gray-600 max-w-2xl mx-auto">

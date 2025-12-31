@@ -37,8 +37,8 @@ const InstagramFeed = () => {
   return (
     <section className="section-padding bg-cream">
       <div className="container-custom">
-        <div className="text-center mb-12">
-          <h2 className="heading-lg text-primary-dark mb-4">
+        <div className="text-center mb-8">
+          <h2 className="heading-lg text-primary-dark mb-3">
             Instagram Milonga Empanadas
           </h2>
           <p className="text-body text-gray-600 mb-6">

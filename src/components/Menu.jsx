@@ -4,8 +4,8 @@ const Menu = ({ openLocationModal }) => {
   return (
     <section id="menu" className="section-padding bg-white">
       <div className="container-custom">
-        <div className="text-center mb-12">
-          <h2 className="heading-lg text-primary-dark mb-4 tracking-wider">
+        <div className="text-center mb-8">
+          <h2 className="heading-lg text-primary-dark mb-3 tracking-wider">
             MENU
           </h2>
           <p className="text-body text-gray-600 max-w-2xl mx-auto">
