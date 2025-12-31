@@ -81,7 +81,7 @@ const Navbar = ({ openLocationModal }) => {
             </Link>
 
             {/* Desktop Menu - Hidden on mobile */}
-            <div className="hidden lg:flex items-center space-x-8 lg:order-2 lg:ml-auto">
+            <div className="hidden lg:flex items-center space-x-6 lg:order-2 lg:ml-auto">
               {navLinks.map((link) => (
                 <Link
                   key={link.name}
