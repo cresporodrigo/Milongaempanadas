@@ -87,23 +87,16 @@ const Navbar = ({ openLocationModal }) => {
       </nav>
 
       {/* Sidebar Menu */}
-      <div
-        className={`fixed inset-0 z-50 transition-opacity duration-300 ${
-          isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
-        }`}
-      >
-        {/* Overlay */}
-        <div
-          className="absolute inset-0 bg-black/50 backdrop-blur-sm"
-          onClick={closeMenu}
-        ></div>
+      {isMenuOpen && (
+        <div className="fixed inset-0 z-50 animate-fade-in">
+          {/* Overlay */}
+          <div
+            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+            onClick={closeMenu}
+          ></div>
 
-        {/* Menu Panel */}
-        <div
-          className={`absolute left-0 top-0 bottom-0 w-80 bg-white shadow-2xl transform transition-transform duration-300 ${
-            isMenuOpen ? 'translate-x-0' : '-translate-x-full'
-          }`}
-        >
+          {/* Menu Panel */}
+          <div className="absolute left-0 top-0 bottom-0 w-80 bg-white shadow-2xl transform transition-transform duration-300 translate-x-0">
           {/* Menu Header */}
           <div className="flex items-center justify-between p-6 border-b border-gray-100">
             <div className="flex items-center">
@@ -189,8 +182,9 @@ const Navbar = ({ openLocationModal }) => {
               </a>
             </div>
           </div>
+          </div>
         </div>
-      </div>
+      )}
     </>
   )
 }
