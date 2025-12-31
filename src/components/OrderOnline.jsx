@@ -25,7 +25,6 @@ const OrderOnline = ({ openLocationModal }) => {
             willChange: 'transform',
           }}
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-teal-900/30 via-teal-800/20 to-black/10"></div>
       </div>
 
       {/* Content */}
