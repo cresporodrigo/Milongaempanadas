@@ -24,7 +24,7 @@ function App() {
       <Menu openLocationModal={openLocationModal} />
       <Locations />
       <InstagramFeed />
-      <Footer />
+      <Footer openLocationModal={openLocationModal} />
       <LocationModal isOpen={isLocationModalOpen} onClose={closeLocationModal} />
     </div>
   )

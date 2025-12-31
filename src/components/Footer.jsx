@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-scroll'
 import { getAssetPath } from '../config'
 
-const Footer = () => {
+const Footer = ({ openLocationModal }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -96,14 +96,12 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <a
-                  href="https://order.online/milonga-empanadas"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-teal-400 transition-colors"
+                <button
+                  onClick={openLocationModal}
+                  className="text-gray-400 hover:text-teal-400 transition-colors cursor-pointer"
                 >
                   Order Online
-                </a>
+                </button>
               </li>
             </ul>
           </div>
