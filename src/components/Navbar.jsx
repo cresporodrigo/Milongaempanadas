@@ -48,10 +48,8 @@ const Navbar = ({ openLocationModal }) => {
             </button>
 
             {/* Logo - Center on mobile, Left on desktop */}
-            <Link
-              to="hero"
-              smooth={true}
-              duration={500}
+            <a
+              href="#hero"
               className="cursor-pointer lg:relative absolute left-1/2 lg:left-0 transform -translate-x-1/2 lg:translate-x-0 lg:order-1"
             >
               <img
@@ -59,21 +57,18 @@ const Navbar = ({ openLocationModal }) => {
                 alt="Milonga Empanadas Logo"
                 className="h-10 md:h-12 w-auto"
               />
-            </Link>
+            </a>
 
             {/* Desktop Menu - Hidden on mobile */}
             <div className="hidden lg:flex items-center space-x-6 lg:order-2 lg:ml-auto">
               {navLinks.map((link) => (
-                <Link
+                <a
                   key={link.name}
-                  to={link.to}
-                  smooth={true}
-                  duration={500}
-                  offset={-80}
+                  href={`#${link.to}`}
                   className="text-gray-700 hover:text-teal-600 font-medium transition-colors cursor-pointer"
                 >
                   {link.name}
-                </Link>
+                </a>
               ))}
               <button
                 onClick={openLocationModal}
@@ -133,17 +128,14 @@ const Navbar = ({ openLocationModal }) => {
           {/* Menu Items */}
           <div className="p-6 space-y-2">
             {navLinks.map((link) => (
-              <Link
+              <a
                 key={link.name}
-                to={link.to}
-                smooth={true}
-                duration={500}
-                offset={-80}
+                href={`#${link.to}`}
                 onClick={closeMenu}
                 className="block py-4 px-4 text-lg font-medium text-gray-700 hover:text-teal-600 hover:bg-teal-50 rounded-lg transition-all cursor-pointer"
               >
                 {link.name}
-              </Link>
+              </a>
             ))}
 
             {/* ORDER NOW Button */}

@@ -18,15 +18,13 @@ function App() {
   return (
     <>
       <Navbar openLocationModal={openLocationModal} />
-      <div style={{ paddingTop: '64px' }}>
-        <Hero openLocationModal={openLocationModal} />
-        <AboutUs />
-        <OrderOnline openLocationModal={openLocationModal} />
-        <Menu openLocationModal={openLocationModal} />
-        <Locations />
-        <InstagramFeed />
-        <Footer openLocationModal={openLocationModal} />
-      </div>
+      <Hero openLocationModal={openLocationModal} />
+      <AboutUs />
+      <OrderOnline openLocationModal={openLocationModal} />
+      <Menu openLocationModal={openLocationModal} />
+      <Locations />
+      <InstagramFeed />
+      <Footer openLocationModal={openLocationModal} />
       <LocationModal isOpen={isLocationModalOpen} onClose={closeLocationModal} />
     </>
   )
