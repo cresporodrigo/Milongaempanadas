@@ -5,10 +5,22 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    background-color: #FFFFFF;
+    min-height: 100%;
   }
 
   body {
     @apply font-sans text-primary-dark antialiased;
+    position: relative;
+    min-height: 100vh;
+    background-color: #FFFFFF;
+    overscroll-behavior-y: none;
+  }
+
+  #root {
+    background-color: #FFFFFF;
+    min-height: 100vh;
   }
 
   h1 {
