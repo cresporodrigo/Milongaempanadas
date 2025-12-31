@@ -1,4 +1,5 @@
 import React from 'react'
+import { getAssetPath } from '../config'
 
 const AboutUs = () => {
   return (
@@ -40,12 +41,12 @@ const AboutUs = () => {
           <div className="relative">
             <div className="rounded-2xl overflow-hidden shadow-2xl">
               <img
-                src="/images/logos/empanada-icon.png"
+                src={getAssetPath('images/logos/empanada-icon.png')}
                 alt="Empanada icon"
                 className="absolute top-8 right-8 w-20 h-20 z-10 animate-bounce opacity-90"
               />
               <img
-                src="/images/backgrounds/indoor.jpg"
+                src={getAssetPath('images/backgrounds/indoor.jpg')}
                 alt="Milonga Empanadas restaurant interior"
                 className="w-full h-[500px] object-cover transform hover:scale-105 transition-transform duration-500"
                 loading="lazy"

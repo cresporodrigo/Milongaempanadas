@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { getAssetPath } from '../config'
 
 const OrderOnline = ({ openLocationModal }) => {
   const [scrollY, setScrollY] = useState(0)
@@ -19,7 +20,7 @@ const OrderOnline = ({ openLocationModal }) => {
         <div
           className="absolute inset-0 w-full h-[120%] bg-cover bg-center"
           style={{
-            backgroundImage: 'url(/images/backgrounds/order-online-bg.jpg)',
+            backgroundImage: `url(${getAssetPath('images/backgrounds/order-online-bg.jpg')})`,
             transform: `translateY(${(scrollY - 1000) * 0.3}px)`,
             willChange: 'transform',
           }}

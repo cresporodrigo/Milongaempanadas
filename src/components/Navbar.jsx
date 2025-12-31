@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-scroll'
+import { getAssetPath } from '../config'
 
 const Navbar = ({ openLocationModal }) => {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -73,7 +74,7 @@ const Navbar = ({ openLocationModal }) => {
               className="cursor-pointer absolute left-1/2 transform -translate-x-1/2"
             >
               <img
-                src="/images/logos/logo-main.png"
+                src={getAssetPath('images/logos/logo-main.png')}
                 alt="Milonga Empanadas Logo"
                 className="h-12 w-auto"
               />
@@ -107,7 +108,7 @@ const Navbar = ({ openLocationModal }) => {
           <div className="flex items-center justify-between p-6 border-b border-gray-100">
             <div className="flex items-center">
               <img
-                src="/images/logos/logo-main.png"
+                src={getAssetPath('images/logos/logo-main.png')}
                 alt="Milonga Empanadas Logo"
                 className="h-12 w-auto"
               />

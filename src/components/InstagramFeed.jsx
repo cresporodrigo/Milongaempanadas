@@ -1,3 +1,5 @@
+import { getAssetPath } from '../config'
+
 const InstagramFeed = () => {
   const instagramPosts = [
     {
@@ -12,7 +14,7 @@ const InstagramFeed = () => {
     },
     {
       url: 'https://www.instagram.com/p/DJuvsXoBSdm/',
-      image: '/images/backgrounds/menu.jpg',
+      image: getAssetPath('images/backgrounds/menu.jpg'),
       type: 'post'
     },
     {

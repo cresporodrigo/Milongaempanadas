@@ -1,17 +1,19 @@
+import { getAssetPath } from '../config'
+
 const Features = () => {
   const features = [
     {
-      image: '/images/features/horario.jpg',
+      image: getAssetPath('images/features/horario.jpg'),
       title: 'Opening Hours',
       description: 'Visit us during our convenient hours. We\'re open daily to serve you the freshest empanadas. Perfect for lunch, dinner, or a quick snack on the go.'
     },
     {
-      image: '/images/features/local.jpg',
+      image: getAssetPath('images/features/local.jpg'),
       title: 'Our Location',
       description: 'Find us in San Marcos and Fashion Valley. Our welcoming atmosphere and friendly staff make every visit special. Come experience authentic Argentine hospitality.'
     },
     {
-      image: '/images/features/delivery.jpg',
+      image: getAssetPath('images/features/delivery.jpg'),
       title: 'Delivery & Pickup',
       description: 'Order online for fast delivery or convenient pickup. Enjoy our handmade empanadas in the comfort of your home or office. Fresh and hot, every time.'
     }

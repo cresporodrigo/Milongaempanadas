@@ -1,3 +1,5 @@
+import { getAssetPath } from '../config'
+
 const Menu = ({ openLocationModal }) => {
   return (
     <section id="menu" className="section-padding bg-white">
@@ -15,7 +17,7 @@ const Menu = ({ openLocationModal }) => {
         <div className="max-w-4xl mx-auto">
           <div className="rounded-2xl overflow-hidden shadow-2xl mb-8 hover:shadow-3xl transition-shadow duration-300">
             <img
-              src="/images/backgrounds/menu.jpg"
+              src={getAssetPath('images/backgrounds/menu.jpg')}
               alt="Milonga Empanadas Menu"
               className="w-full h-auto object-cover"
               loading="lazy"

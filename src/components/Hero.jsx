@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-scroll'
+import { getAssetPath } from '../config'
 
 const Hero = ({ openLocationModal }) => {
   const [scrollY, setScrollY] = useState(0)
@@ -29,7 +30,7 @@ const Hero = ({ openLocationModal }) => {
             left: 0,
             right: 0,
             height: '120%',
-            backgroundImage: 'url(/images/backgrounds/order-online-bg.jpg)',
+            backgroundImage: `url(${getAssetPath('images/backgrounds/order-online-bg.jpg')})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center center',
             backgroundRepeat: 'no-repeat',
@@ -45,7 +46,7 @@ const Hero = ({ openLocationModal }) => {
         {/* ARTISANAL Logo with Scale Animation */}
         <div className="mb-6 animate-fade-in-scale">
           <img
-            src="/images/backgrounds/artisanal.png"
+            src={getAssetPath('images/backgrounds/artisanal.png')}
             alt="Artisanal"
             className="w-48 md:w-72 lg:w-80 h-auto mx-auto drop-shadow-2xl"
             style={{

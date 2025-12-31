@@ -1,4 +1,5 @@
 import React from 'react'
+import { getAssetPath } from '../config'
 
 const LocationCard = ({ name, address, hours, image, mapsUrl }) => {
   return (
@@ -67,7 +68,7 @@ const Locations = () => {
         'Sat: 12pm – 6pm',
         'Sun: Closed'
       ],
-      image: '/images/backgrounds/indoor.jpg',
+      image: getAssetPath('images/backgrounds/indoor.jpg'),
       mapsUrl: 'https://maps.google.com/?q=51+N+City+Dr+Suite+128E+San+Marcos+CA+92078'
     },
     {
@@ -77,7 +78,7 @@ const Locations = () => {
         'Mon–Sat: 10am – 9pm',
         'Sun: 11am – 7pm'
       ],
-      image: '/images/locations/fashion-valley.jpg',
+      image: getAssetPath('images/locations/fashion-valley.jpg'),
       mapsUrl: 'https://maps.google.com/?q=7007+Friars+Rd+San+Diego+CA+92108'
     }
   ]

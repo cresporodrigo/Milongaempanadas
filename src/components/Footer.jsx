@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-scroll'
+import { getAssetPath } from '../config'
 
 const Footer = () => {
   const [formData, setFormData] = useState({
@@ -46,7 +47,7 @@ const Footer = () => {
             >
               <div className="mb-4">
                 <img
-                  src="/images/logos/logo-footer.png"
+                  src={getAssetPath('images/logos/logo-footer.png')}
                   alt="Milonga Empanadas Logo"
                   className="h-16 w-auto"
                 />
