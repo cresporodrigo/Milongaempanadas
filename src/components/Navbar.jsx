@@ -66,12 +66,12 @@ const Navbar = ({ openLocationModal }) => {
               </svg>
             </button>
 
-            {/* Logo - Center on mobile, Right on desktop */}
+            {/* Logo - Center on mobile, Left on desktop */}
             <Link
               to="hero"
               smooth={true}
               duration={500}
-              className="cursor-pointer lg:relative absolute left-1/2 lg:left-auto transform -translate-x-1/2 lg:translate-x-0 lg:order-3"
+              className="cursor-pointer lg:relative absolute left-1/2 lg:left-0 transform -translate-x-1/2 lg:translate-x-0 lg:order-1"
             >
               <img
                 src={getAssetPath('images/logos/logo-main.png')}
@@ -81,7 +81,7 @@ const Navbar = ({ openLocationModal }) => {
             </Link>
 
             {/* Desktop Menu - Hidden on mobile */}
-            <div className="hidden lg:flex items-center space-x-8 lg:order-2">
+            <div className="hidden lg:flex items-center space-x-8 lg:order-2 lg:ml-auto">
               {navLinks.map((link) => (
                 <Link
                   key={link.name}
