@@ -42,9 +42,10 @@ const Navbar = ({ openLocationModal }) => {
             ? 'bg-white shadow-md'
             : 'bg-white/95 backdrop-blur-sm'
         }`}
+        style={{ position: 'fixed', top: 0 }}
       >
         <div className="container-custom">
-          <div className="flex items-center justify-between h-20">
+          <div className="flex items-center justify-between h-16 md:h-20">
             {/* Hamburger Menu Button - Mobile Only */}
             <button
               onClick={toggleMenu}
@@ -76,7 +77,7 @@ const Navbar = ({ openLocationModal }) => {
               <img
                 src={getAssetPath('images/logos/logo-main.png')}
                 alt="Milonga Empanadas Logo"
-                className="h-12 w-auto"
+                className="h-10 md:h-12 w-auto"
               />
             </Link>
 
