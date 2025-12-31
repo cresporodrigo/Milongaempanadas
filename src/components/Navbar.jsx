@@ -45,10 +45,10 @@ const Navbar = ({ openLocationModal }) => {
       >
         <div className="container-custom">
           <div className="flex items-center justify-between h-20">
-            {/* Hamburger Menu Button - Left */}
+            {/* Hamburger Menu Button - Mobile Only */}
             <button
               onClick={toggleMenu}
-              className="p-2 rounded-lg hover:bg-teal-50 transition-colors text-teal-600"
+              className="lg:hidden p-2 rounded-lg hover:bg-teal-50 transition-colors text-teal-600"
               aria-label="Toggle menu"
             >
               <svg
@@ -66,12 +66,12 @@ const Navbar = ({ openLocationModal }) => {
               </svg>
             </button>
 
-            {/* Logo - Center */}
+            {/* Logo - Center on mobile, Left on desktop */}
             <Link
               to="hero"
               smooth={true}
               duration={500}
-              className="cursor-pointer absolute left-1/2 transform -translate-x-1/2"
+              className="cursor-pointer lg:relative absolute left-1/2 lg:left-0 transform -translate-x-1/2 lg:translate-x-0"
             >
               <img
                 src={getAssetPath('images/logos/logo-main.png')}
@@ -80,8 +80,30 @@ const Navbar = ({ openLocationModal }) => {
               />
             </Link>
 
-            {/* Empty space for symmetry - Right */}
-            <div className="w-12"></div>
+            {/* Desktop Menu - Hidden on mobile */}
+            <div className="hidden lg:flex items-center space-x-8">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.name}
+                  to={link.to}
+                  smooth={true}
+                  duration={500}
+                  offset={-80}
+                  className="text-gray-700 hover:text-teal-600 font-medium transition-colors cursor-pointer"
+                >
+                  {link.name}
+                </Link>
+              ))}
+              <button
+                onClick={openLocationModal}
+                className="px-6 py-2 bg-gradient-to-r from-teal-500 to-teal-600 text-white font-semibold rounded-lg hover:from-teal-600 hover:to-teal-700 transition-all"
+              >
+                ORDER NOW
+              </button>
+            </div>
+
+            {/* Empty space for symmetry - Mobile only */}
+            <div className="w-12 lg:hidden"></div>
           </div>
         </div>
       </nav>
