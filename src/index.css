@@ -1,0 +1,98 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply font-sans text-primary-dark antialiased;
+  }
+
+  h1 {
+    @apply font-display uppercase tracking-wider;
+  }
+
+  h2, h3 {
+    @apply font-heading;
+  }
+
+  h4, h5, h6 {
+    @apply font-sans font-bold;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply px-8 py-3 bg-gradient-to-r from-teal-500 to-teal-600 text-white font-semibold rounded-lg
+           hover:from-teal-600 hover:to-teal-700 transition-all duration-300
+           transform hover:scale-105 shadow-lg hover:shadow-2xl hover:shadow-teal-500/50;
+  }
+
+  .btn-secondary {
+    @apply px-6 py-2 border-2 border-teal-500 text-teal-600 font-semibold rounded-lg
+           hover:bg-teal-500 hover:text-white transition-all duration-300;
+  }
+
+  .section-padding {
+    @apply py-20 md:py-28;
+  }
+
+  .container-custom {
+    @apply max-w-container mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .heading-xl {
+    @apply text-4xl md:text-5xl lg:text-6xl font-bold;
+  }
+
+  .heading-lg {
+    @apply text-3xl md:text-4xl lg:text-5xl font-bold;
+  }
+
+  .heading-md {
+    @apply text-2xl md:text-3xl font-semibold;
+  }
+
+  .text-body {
+    @apply text-base md:text-lg leading-relaxed;
+  }
+}
+
+@layer utilities {
+  .fade-in {
+    animation: fadeIn 1s ease-in;
+  }
+
+  .animate-fade-in-scale {
+    animation: fadeInScale 1.2s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeInScale {
+    from {
+      opacity: 0;
+      transform: scale(1.5);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .text-shadow {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  }
+}
