@@ -23,22 +23,44 @@ const Footer = ({ openLocationModal }) => {
     setIsSubmitting(true)
     setSubmitStatus('')
 
-    // Simulate form submission (replace with actual API call)
-    setTimeout(() => {
-      setSubmitStatus('success')
-      setIsSubmitting(false)
-      setFormData({ name: '', email: '', message: '' })
+    try {
+      const response = await fetch('https://formspree.io/f/xvgoeyzo', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+          _to: 'fashionvalley@milongaempanadas.com'
+        })
+      })
 
+      if (response.ok) {
+        setSubmitStatus('success')
+        setFormData({ name: '', email: '', message: '' })
+        setTimeout(() => setSubmitStatus(''), 5000)
+      } else {
+        setSubmitStatus('error')
+        setTimeout(() => setSubmitStatus(''), 5000)
+      }
+    } catch (error) {
+      console.error('Error:', error)
+      setSubmitStatus('error')
       setTimeout(() => setSubmitStatus(''), 5000)
-    }, 1000)
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
     <footer id="contact" className="bg-footer text-white py-12">
       <div className="container-custom">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 mb-8">
           {/* Logo and Description */}
-          <div className="space-y-4">
+          <div className="space-y-4 lg:col-span-2">
             <Link
               to="hero"
               smooth={true}
@@ -59,7 +81,7 @@ const Footer = ({ openLocationModal }) => {
           </div>
 
           {/* Quick Links */}
-          <div>
+          <div className="lg:col-span-2">
             <h3 className="text-xl font-heading font-bold mb-4">Quick Links</h3>
             <ul className="space-y-2">
               <li>
@@ -107,9 +129,9 @@ const Footer = ({ openLocationModal }) => {
           </div>
 
           {/* Contact Info */}
-          <div>
+          <div className="lg:col-span-4">
             <h3 className="text-xl font-heading font-bold mb-4">Contact</h3>
-            <div className="space-y-3 text-gray-400">
+            <div className="space-y-3 text-gray-400 text-sm">
               <div className="flex items-start space-x-3">
                 <svg className="w-5 h-5 text-teal-400 flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd"/>
@@ -121,16 +143,16 @@ const Footer = ({ openLocationModal }) => {
                   <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
                   <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
                 </svg>
-                <a href="mailto:info@milongaempanadas.com" className="hover:text-teal-400 transition-colors">
-                  info@milongaempanadas.com
+                <a href="mailto:fashionvalley@milongaempanadas.com" className="hover:text-teal-400 transition-colors">
+                  fashionvalley@milongaempanadas.com
                 </a>
               </div>
               <div className="flex items-center space-x-3">
                 <svg className="w-5 h-5 text-teal-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
                 </svg>
-                <a href="tel:+16195551234" className="hover:text-teal-400 transition-colors">
-                  (619) 555-1234
+                <a href="tel:+16199857592" className="hover:text-teal-400 transition-colors">
+                  (619) 985-7592
                 </a>
               </div>
             </div>
@@ -149,7 +171,7 @@ const Footer = ({ openLocationModal }) => {
                 </svg>
               </a>
               <a
-                href="https://instagram.com/milongaempanadas"
+                href="https://instagram.com/milongaempanada"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-teal-500 transition-colors"
@@ -174,7 +196,7 @@ const Footer = ({ openLocationModal }) => {
           </div>
 
           {/* Contact Form */}
-          <div>
+          <div className="lg:col-span-4">
             <h3 className="text-xl font-heading font-bold mb-4">Contact Us</h3>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>

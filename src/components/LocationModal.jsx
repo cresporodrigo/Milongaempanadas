@@ -8,18 +8,18 @@ const LocationModal = ({ isOpen, onClose }) => {
   // Location configuration with coordinates
   const locations = [
     {
-      name: 'San Marcos',
-      address: '51 N City Dr Suite 128E, San Marcos, CA 92078',
-      lat: 33.1434,
-      lng: -117.1661,
-      squareUrl: 'https://www.doordash.com/es/store/milonga-empanadas-san-marcos-24901827/82015957/?srsltid=AfmBOooOWvEH1YpdM1EFzVkAmg5NHyaovmD05IzhUkjUGcENfwsthkLp'
-    },
-    {
       name: 'Fashion Valley',
       address: '7007 Friars Rd, San Diego, CA 92108',
       lat: 32.7677,
       lng: -117.1664,
       squareUrl: 'https://order.online/business/milonga-empanadas-15941855'
+    },
+    {
+      name: 'San Marcos',
+      address: '51 N City Dr Suite 128E, San Marcos, CA 92078',
+      lat: 33.1434,
+      lng: -117.1661,
+      squareUrl: 'https://www.doordash.com/es/store/milonga-empanadas-san-marcos-24901827/82015957/?srsltid=AfmBOooOWvEH1YpdM1EFzVkAmg5NHyaovmD05IzhUkjUGcENfwsthkLp'
     }
   ]
 

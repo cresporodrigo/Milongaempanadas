@@ -22,22 +22,45 @@ export default function Catering() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    setSubmitted(true);
-    setTimeout(() => {
-      setFormData({
-        fullName: '',
-        email: '',
-        phone: '',
-        eventType: 'Corporate Event',
-        guests: '',
-        eventDate: '',
-        details: '',
-      });
-      setSubmitted(false);
-    }, 2000);
+    try {
+      const response = await fetch('https://formspree.io/f/xvgoeyzo', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          fullName: formData.fullName,
+          email: formData.email,
+          phone: formData.phone,
+          eventType: formData.eventType,
+          guests: formData.guests,
+          eventDate: formData.eventDate,
+          details: formData.details,
+          _to: 'fashionvalley@milongaempanadas.com'
+        })
+      })
+
+      if (response.ok) {
+        setSubmitted(true);
+        setFormData({
+          fullName: '',
+          email: '',
+          phone: '',
+          eventType: 'Corporate Event',
+          guests: '',
+          eventDate: '',
+          details: '',
+        });
+        setTimeout(() => setSubmitted(false), 2000);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      setSubmitted(true);
+      setTimeout(() => setSubmitted(false), 2000);
+    }
   };
 
   const services = [
@@ -246,8 +269,8 @@ export default function Catering() {
                 ✉️
               </div>
               <h4 className="text-lg font-heading font-semibold text-gray-800 mb-2">Email</h4>
-              <a href="mailto:catering@empanadas.com" className="text-cyan-600 hover:text-cyan-700">
-                catering@empanadas.com
+              <a href="mailto:fashionvalley@milongaempanadas.com" className="text-cyan-600 hover:text-cyan-700">
+                fashionvalley@milongaempanadas.com
               </a>
             </div>
 
