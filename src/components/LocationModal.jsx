@@ -73,8 +73,9 @@ const LocationModal = ({ isOpen, onClose }) => {
         prev.distance < current.distance ? prev : current
       )
 
-      // Redirect to the nearest location's ordering page
-      window.location.href = nearest.squareUrl
+      // Open the nearest location's ordering page in a new tab
+      window.open(nearest.squareUrl, '_blank', 'noopener,noreferrer')
+      onClose()
 
     } catch (err) {
       setError('There was an error processing your location. Please try again.')
@@ -115,8 +116,9 @@ const LocationModal = ({ isOpen, onClose }) => {
           prev.distance < current.distance ? prev : current
         )
 
-        // Redirect
-        window.location.href = nearest.squareUrl
+        // Open in new tab
+        window.open(nearest.squareUrl, '_blank', 'noopener,noreferrer')
+        onClose()
       },
       (error) => {
         setError('Could not get your location. Please enter your address manually.')
@@ -126,7 +128,8 @@ const LocationModal = ({ isOpen, onClose }) => {
   }
 
   const handleSelectLocation = (location) => {
-    window.location.href = location.squareUrl
+    window.open(location.squareUrl, '_blank', 'noopener,noreferrer')
+    onClose()
   }
 
   if (!isOpen) return null

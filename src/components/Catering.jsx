@@ -13,6 +13,7 @@ export default function Catering() {
   });
 
   const [submitted, setSubmitted] = useState(false);
+  const [honeypot, setHoneypot] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,6 +25,8 @@ export default function Catering() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // Anti-spam honeypot check
+    if (honeypot) return;
     try {
       const response = await fetch('https://formspree.io/f/xvgoeyzo', {
         method: 'POST',
@@ -156,6 +159,16 @@ export default function Catering() {
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Honeypot anti-spam */}
+            <input
+              type="text"
+              name="_gotcha"
+              value={honeypot}
+              onChange={(e) => setHoneypot(e.target.value)}
+              style={{ display: 'none' }}
+              tabIndex="-1"
+              autoComplete="off"
+            />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Full Name */}
               <div>

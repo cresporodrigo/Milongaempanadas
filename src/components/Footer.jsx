@@ -10,6 +10,7 @@ const Footer = ({ openLocationModal }) => {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState('')
+  const [honeypot, setHoneypot] = useState('')
 
   const handleChange = (e) => {
     setFormData({
@@ -20,6 +21,8 @@ const Footer = ({ openLocationModal }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    // Anti-spam honeypot check
+    if (honeypot) return
     setIsSubmitting(true)
     setSubmitStatus('')
 
@@ -199,6 +202,16 @@ const Footer = ({ openLocationModal }) => {
           <div className="lg:col-span-4">
             <h3 className="text-xl font-heading font-bold mb-4">Contact Us</h3>
             <form onSubmit={handleSubmit} className="space-y-4">
+              {/* Honeypot anti-spam */}
+              <input
+                type="text"
+                name="_gotcha"
+                value={honeypot}
+                onChange={(e) => setHoneypot(e.target.value)}
+                style={{ display: 'none' }}
+                tabIndex="-1"
+                autoComplete="off"
+              />
               <div>
                 <input
                   type="text"
@@ -249,7 +262,7 @@ const Footer = ({ openLocationModal }) => {
         {/* Bottom Bar */}
         <div className="border-t border-gray-800 pt-6 text-center">
           <p className="text-gray-400">
-            &copy; 2025 Milonga Empanadas. All Rights Reserved.
+            &copy; {new Date().getFullYear()} Milonga Empanadas. All Rights Reserved.
           </p>
         </div>
       </div>

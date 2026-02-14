@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { Link } from 'react-scroll'
 import { getAssetPath } from '../config'
 
 const Navbar = ({ openLocationModal }) => {
@@ -155,7 +154,7 @@ const Navbar = ({ openLocationModal }) => {
           <div className="absolute bottom-0 left-0 right-0 p-6 border-t border-gray-100">
             <div className="flex space-x-4">
               <a
-                href="https://instagram.com/milongaempanadas"
+                href="https://instagram.com/milongaempanada"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 bg-teal-50 rounded-full flex items-center justify-center hover:bg-teal-500 hover:text-white transition-colors text-teal-600"
