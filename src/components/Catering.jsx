@@ -121,11 +121,39 @@ export default function Catering() {
           ))}
         </div>
 
-        {/* Form Section */}
-        <div className="bg-white rounded-lg shadow-lg p-8 md:p-12 mb-12">
-          <h3 className="heading-md text-primary-dark text-center mb-8">
-            Request a Catering Quote
+        {/* Order Catering CTA */}
+        <div className="bg-white rounded-lg shadow-lg p-8 md:p-12 mb-12 text-center">
+          <h3 className="heading-md text-primary-dark mb-4">
+            Order Your Catering
           </h3>
+          <p className="text-gray-600 text-lg mb-8 max-w-2xl mx-auto">
+            Place your catering order directly through our EZcater page — fast, easy, and hassle-free.
+          </p>
+          <a
+            href="https://www.ezcater.com/catering/milonga-empanadas-3"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-4 px-12 rounded-lg text-xl transition-colors"
+          >
+            Order Now
+          </a>
+        </div>
+
+        {/* Divider */}
+        <div className="flex items-center gap-4 mb-12">
+          <div className="flex-1 h-px bg-gray-300"></div>
+          <span className="text-gray-500 font-heading text-lg">or</span>
+          <div className="flex-1 h-px bg-gray-300"></div>
+        </div>
+
+        {/* Custom Request Form */}
+        <div className="bg-white rounded-lg shadow-lg p-8 md:p-12">
+          <h3 className="heading-md text-primary-dark text-center mb-4">
+            Need Something Special?
+          </h3>
+          <p className="text-gray-600 text-center mb-8 max-w-2xl mx-auto">
+            If you have a custom request or need a personalized catering experience, fill out the form below and we'll get back to you.
+          </p>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -251,52 +279,10 @@ export default function Catering() {
                 type="submit"
                 className="w-full bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-3 px-6 rounded-lg transition-colors"
               >
-                {submitted ? 'Request Sent!' : 'Send Catering Request'}
+                {submitted ? 'Request Sent!' : 'Send Request'}
               </button>
             </div>
           </form>
-        </div>
-
-        {/* Contact Information */}
-        <div className="bg-cyan-50 rounded-lg p-8 md:p-12">
-          <h3 className="heading-md text-primary-dark text-center mb-8">
-            Direct Contact Information
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Email */}
-            <div className="flex flex-col items-center text-center">
-              <div className="bg-cyan-600 p-4 rounded-full mb-4 text-2xl">
-                ✉️
-              </div>
-              <h4 className="text-lg font-heading font-semibold text-gray-800 mb-2">Email</h4>
-              <a href="mailto:fashionvalley@milongaempanadas.com" className="text-cyan-600 hover:text-cyan-700">
-                fashionvalley@milongaempanadas.com
-              </a>
-            </div>
-
-            {/* Phone */}
-            <div className="flex flex-col items-center text-center">
-              <div className="bg-cyan-600 p-4 rounded-full mb-4 text-2xl">
-                📱
-              </div>
-              <h4 className="text-lg font-heading font-semibold text-gray-800 mb-2">Phone</h4>
-              <a href="tel:+15551234567" className="text-cyan-600 hover:text-cyan-700">
-                +1 (555) 123-4567
-              </a>
-            </div>
-
-            {/* Location */}
-            <div className="flex flex-col items-center text-center">
-              <div className="bg-cyan-600 p-4 rounded-full mb-4 text-2xl">
-                📍
-              </div>
-              <h4 className="text-lg font-heading font-semibold text-gray-800 mb-2">Location</h4>
-              <p className="text-gray-600">
-                123 Empanada Street<br />
-                Buenos Aires, Argentina
-              </p>
-            </div>
-          </div>
         </div>
       </div>
     </section>
