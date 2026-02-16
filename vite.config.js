@@ -1,9 +1,14 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
+// Auto-detect repo name from GitHub Actions, fallback to /Empanadas/ for local dev
+const base = process.env.GITHUB_REPOSITORY
+  ? `/${process.env.GITHUB_REPOSITORY.split('/')[1]}/`
+  : '/Empanadas/'
+
 export default defineConfig({
   plugins: [react()],
-  base: '/Empanadas/', // Replace with your repository name
+  base,
   server: {
     port: 3000,
     open: true
