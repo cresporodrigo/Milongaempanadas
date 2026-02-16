@@ -1,17 +1,150 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { getAssetPath } from '../config'
 
+// Get current open/closed status and next event
+const getLocationStatus = (hours) => {
+  const now = new Date()
+  const day = now.getDay() // 0=Sun, 1=Mon...
+  const currentMinutes = now.getHours() * 60 + now.getMinutes()
+
+  // Parse hours array into structured schedule
+  const schedule = {}
+  hours.forEach(h => {
+    const match = h.match(/^([\w–]+):\s*(.+)$/)
+    if (!match) return
+    const [, days, time] = match
+
+    if (time.trim().toLowerCase() === 'closed') {
+      const dayNames = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 }
+      const dayList = days.split('–').map(d => d.trim())
+      if (dayList.length === 1) {
+        const dayNum = dayNames[dayList[0]]
+        if (dayNum !== undefined) schedule[dayNum] = null
+      }
+      return
+    }
+
+    const timeMatch = time.match(/(\d+)(am|pm)\s*–\s*(\d+)(am|pm)/)
+    if (!timeMatch) return
+    let openH = parseInt(timeMatch[1])
+    const openP = timeMatch[2]
+    let closeH = parseInt(timeMatch[3])
+    const closeP = timeMatch[4]
+    if (openP === 'pm' && openH !== 12) openH += 12
+    if (openP === 'am' && openH === 12) openH = 0
+    if (closeP === 'pm' && closeH !== 12) closeH += 12
+    if (closeP === 'am' && closeH === 12) closeH = 0
+
+    const dayNames = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 }
+    const dayList = days.split('–').map(d => d.trim())
+    if (dayList.length === 2) {
+      const start = dayNames[dayList[0]]
+      const end = dayNames[dayList[1]]
+      if (start !== undefined && end !== undefined) {
+        for (let i = start; i <= end; i++) {
+          schedule[i] = { open: openH * 60, close: closeH * 60 }
+        }
+      }
+    } else {
+      const dayNum = dayNames[dayList[0]]
+      if (dayNum !== undefined) schedule[dayNum] = { open: openH * 60, close: closeH * 60 }
+    }
+  })
+
+  const todaySchedule = schedule[day]
+
+  if (!todaySchedule) {
+    // Find next open day
+    for (let i = 1; i <= 7; i++) {
+      const nextDay = (day + i) % 7
+      if (schedule[nextDay]) {
+        const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+        const openHour = Math.floor(schedule[nextDay].open / 60)
+        const openMinute = schedule[nextDay].open % 60
+        const period = openHour >= 12 ? 'pm' : 'am'
+        const displayHour = openHour > 12 ? openHour - 12 : openHour === 0 ? 12 : openHour
+        return {
+          isOpen: false,
+          message: `Opens ${dayNames[nextDay]} at ${displayHour}${openMinute ? ':' + String(openMinute).padStart(2, '0') : ''}${period}`,
+          minutesLeft: null
+        }
+      }
+    }
+    return { isOpen: false, message: 'Closed', minutesLeft: null }
+  }
+
+  if (currentMinutes >= todaySchedule.open && currentMinutes < todaySchedule.close) {
+    const minutesLeft = todaySchedule.close - currentMinutes
+    let message = 'Open Now'
+    if (minutesLeft <= 60) {
+      message = `Closing in ${minutesLeft} min`
+    }
+    return { isOpen: true, message, minutesLeft }
+  }
+
+  if (currentMinutes < todaySchedule.open) {
+    const minsUntilOpen = todaySchedule.open - currentMinutes
+    const hours = Math.floor(minsUntilOpen / 60)
+    const mins = minsUntilOpen % 60
+    return {
+      isOpen: false,
+      message: `Opens in ${hours > 0 ? hours + 'h ' : ''}${mins}min`,
+      minutesLeft: null
+    }
+  }
+
+  // Past closing time, find next open
+  for (let i = 1; i <= 7; i++) {
+    const nextDay = (day + i) % 7
+    if (schedule[nextDay]) {
+      const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+      const openHour = Math.floor(schedule[nextDay].open / 60)
+      const period = openHour >= 12 ? 'pm' : 'am'
+      const displayHour = openHour > 12 ? openHour - 12 : openHour === 0 ? 12 : openHour
+      return {
+        isOpen: false,
+        message: `Opens ${dayNames[nextDay]} at ${displayHour}${period}`,
+        minutesLeft: null
+      }
+    }
+  }
+
+  return { isOpen: false, message: 'Closed', minutesLeft: null }
+}
+
 const LocationCard = ({ name, address, hours, image, mapsUrl }) => {
+  const [status, setStatus] = useState(() => getLocationStatus(hours))
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setStatus(getLocationStatus(hours))
+    }, 60000) // Update every minute
+    return () => clearInterval(interval)
+  }, [hours])
+
   return (
     <div className="bg-white rounded-xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 flex flex-col h-full">
-      {/* Location Image */}
-      <div className="h-64 overflow-hidden">
+      {/* Location Image with Status Badge */}
+      <div className="h-64 overflow-hidden relative">
         <img
           src={image}
           alt={`${name} location`}
           className="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500"
           loading="lazy"
         />
+        {/* Open/Closed Badge */}
+        <div className={`absolute top-4 right-4 px-4 py-2 rounded-full text-sm font-bold shadow-lg flex items-center space-x-2 ${
+          status.isOpen
+            ? status.minutesLeft && status.minutesLeft <= 60
+              ? 'bg-yellow-500 text-white animate-pulse'
+              : 'bg-green-500 text-white'
+            : 'bg-red-500 text-white'
+        }`}>
+          <span className={`w-2.5 h-2.5 rounded-full ${
+            status.isOpen ? 'bg-white' : 'bg-white/60'
+          }`}></span>
+          <span>{status.message}</span>
+        </div>
       </div>
 
       {/* Location Details */}
@@ -60,6 +193,16 @@ const LocationCard = ({ name, address, hours, image, mapsUrl }) => {
 const Locations = () => {
   const locations = [
     {
+      name: 'Fashion Valley',
+      address: '7007 Friars Rd, San Diego, CA 92108',
+      hours: [
+        'Mon–Sat: 10am – 9pm',
+        'Sun: 11am – 7pm'
+      ],
+      image: getAssetPath('images/locations/fashion-valley.jpg'),
+      mapsUrl: 'https://maps.app.goo.gl/uMbwx5aQwMWwbVJs5'
+    },
+    {
       name: 'San Marcos',
       address: '51 N City Dr Suite 128E, San Marcos, CA 92078',
       hours: [
@@ -69,17 +212,7 @@ const Locations = () => {
         'Sun: Closed'
       ],
       image: getAssetPath('images/backgrounds/indoor.jpg'),
-      mapsUrl: 'https://maps.google.com/?q=51+N+City+Dr+Suite+128E+San+Marcos+CA+92078'
-    },
-    {
-      name: 'Fashion Valley',
-      address: '7007 Friars Rd, San Diego, CA 92108',
-      hours: [
-        'Mon–Sat: 10am – 9pm',
-        'Sun: 11am – 7pm'
-      ],
-      image: getAssetPath('images/locations/fashion-valley.jpg'),
-      mapsUrl: 'https://maps.google.com/?q=7007+Friars+Rd+San+Diego+CA+92108'
+      mapsUrl: 'https://maps.app.goo.gl/oYKZgno6zraAXW4eA'
     }
   ]
 

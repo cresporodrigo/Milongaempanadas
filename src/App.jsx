@@ -20,10 +20,10 @@ function App() {
       <Navbar openLocationModal={openLocationModal} />
       <Hero openLocationModal={openLocationModal} />
       <Menu openLocationModal={openLocationModal} />
-      <Catering />
-      <InstagramFeed />
-      <AboutUs />
       <Locations />
+      <Catering />
+      <AboutUs />
+      <InstagramFeed />
       <Footer openLocationModal={openLocationModal} />
       <LocationModal isOpen={isLocationModalOpen} onClose={closeLocationModal} />
     </>

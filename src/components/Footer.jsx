@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { Link } from 'react-scroll'
 import { getAssetPath } from '../config'
 
 const Footer = ({ openLocationModal }) => {
@@ -64,10 +63,8 @@ const Footer = ({ openLocationModal }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 mb-8">
           {/* Logo and Description */}
           <div className="space-y-4 lg:col-span-2">
-            <Link
-              to="hero"
-              smooth={true}
-              duration={500}
+            <a
+              href="#hero"
               className="cursor-pointer inline-block"
             >
               <div className="mb-4">
@@ -77,7 +74,7 @@ const Footer = ({ openLocationModal }) => {
                   className="h-16 w-auto"
                 />
               </div>
-            </Link>
+            </a>
             <p className="text-gray-400">
               Authentic Argentine empanadas handmade from scratch with love and tradition.
             </p>
@@ -88,37 +85,28 @@ const Footer = ({ openLocationModal }) => {
             <h3 className="text-xl font-heading font-bold mb-4">Quick Links</h3>
             <ul className="space-y-2">
               <li>
-                <Link
-                  to="about"
-                  smooth={true}
-                  duration={500}
-                  offset={-80}
+                <a
+                  href="#about"
                   className="text-gray-400 hover:text-teal-400 transition-colors cursor-pointer inline-block"
                 >
                   About Us
-                </Link>
+                </a>
               </li>
               <li>
-                <Link
-                  to="menu"
-                  smooth={true}
-                  duration={500}
-                  offset={-80}
+                <a
+                  href="#menu"
                   className="text-gray-400 hover:text-teal-400 transition-colors cursor-pointer inline-block"
                 >
                   Menu
-                </Link>
+                </a>
               </li>
               <li>
-                <Link
-                  to="locations"
-                  smooth={true}
-                  duration={500}
-                  offset={-80}
+                <a
+                  href="#locations"
                   className="text-gray-400 hover:text-teal-400 transition-colors cursor-pointer inline-block"
                 >
                   Locations
-                </Link>
+                </a>
               </li>
               <li>
                 <button
@@ -139,7 +127,7 @@ const Footer = ({ openLocationModal }) => {
                 <svg className="w-5 h-5 text-teal-400 flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd"/>
                 </svg>
-                <p>51 N City Dr Suite 128E<br />San Marcos, CA 92078</p>
+                <p>7007 Friars Rd<br />San Diego, CA 92108</p>
               </div>
               <div className="flex items-center space-x-3">
                 <svg className="w-5 h-5 text-teal-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">

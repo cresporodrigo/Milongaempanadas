@@ -4,12 +4,12 @@ const InstagramFeed = () => {
   const instagramPosts = [
     {
       url: 'https://www.instagram.com/p/DQxWMMcEcm-/',
-      image: 'https://scontent-ord5-1.cdninstagram.com/v/t51.82787-15/573922260_18383242147195372_8240612352819652665_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=111&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiRkVFRC5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=IXe1ErivOJEQ7kNvwFFfa2J&_nc_oc=AdnTpHqcir60RfbiPoAP5x4z5QKwg82Fyzv0Owr0qWWfy6RWGnw3500QmV1CipM6mmc&_nc_zt=23&_nc_ht=scontent-ord5-1.cdninstagram.com&edm=ANQ71j8EAAAA&_nc_gid=Ut6gzGuhXdyKmZTiLL9X6g&oh=00_AfnVpfHOU2KVK1KOpFU8c-bZ89BBN8p9GSTI90UWOTT4sw&oe=695B3680',
+      image: getAssetPath('images/backgrounds/hero-empanadas.jpg'),
       type: 'post'
     },
     {
       url: 'https://www.instagram.com/reel/DO6vmqpEuMW/',
-      image: 'https://scontent-ord5-2.cdninstagram.com/v/t51.82787-15/551578106_18375647116195372_9075325785572430941_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=105&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=rd4ses47kUQQ7kNvwHnJqxy&_nc_oc=Adk3PfTxZRpHoVV7c-7uJU83aPvdewbVuO-TkAQnG7cOcFf8JCKh6f0JdxJlaVZzPEk&_nc_zt=23&_nc_ht=scontent-ord5-2.cdninstagram.com&edm=ANQ71j8EAAAA&_nc_gid=MYVVb37yZ6GCTgWvBuqyBQ&oh=00_AfkJCOlxx1h9Lm6eBqwAxFjeYAN1XXbVtPwgXj1xDYYkyg&oe=695B1D16',
+      image: getAssetPath('images/features/local.jpg'),
       type: 'reel'
     },
     {
@@ -19,17 +19,17 @@ const InstagramFeed = () => {
     },
     {
       url: 'https://www.instagram.com/p/DJm9XxvhLiN/',
-      image: 'https://scontent-ord5-1.cdninstagram.com/v/t51.75761-15/497785152_18359382226195372_6584642125719191632_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=101&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiRkVFRC5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=SJSUQ5UjOFMQ7kNvwEPWw4t&_nc_oc=AdnTom-DJRpJNzZ-LOWfN7q2SkM5Qq5PX8FevaOZOzCb07qfZfst7y2J-V1iYhkHZ9w&_nc_zt=23&_nc_ht=scontent-ord5-1.cdninstagram.com&edm=ANQ71j8EAAAA&_nc_gid=dcFYUyfpVo9onQ4JqAJmCQ&oh=00_AfmdtHEqr9f0SXA3wlt5c0iIHbYBGzxbrTiarzp6Jizz8Q&oe=695B15D1',
+      image: getAssetPath('images/backgrounds/our-story.jpg'),
       type: 'post'
     },
     {
       url: 'https://www.instagram.com/p/DIeuPu5zLiY/',
-      image: 'https://scontent-ord5-2.cdninstagram.com/v/t51.75761-15/490638857_18356041315195372_6855238490857251609_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=102&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiRkVFRC5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=KEauqHKH9cMQ7kNvwHB3M_c&_nc_oc=AdkondIDQnVGn0SHYDoARWBdCekdfXZ3bpP5MZKM5aO21IeikvGRBHU1ODTbdnVyeDA&_nc_zt=23&_nc_ht=scontent-ord5-2.cdninstagram.com&edm=ANQ71j8EAAAA&_nc_gid=NxxoA6RUr8ZxbOqutllTmQ&oh=00_Afns3nEO3jWZI6JvihDw-ToCu4eutIgF15VRRwZsLATJng&oe=695B2C8F',
+      image: getAssetPath('images/locations/fashion-valley.jpg'),
       type: 'post'
     },
     {
       url: 'https://www.instagram.com/p/DIMnwyThmAf/',
-      image: 'https://scontent-ord5-3.cdninstagram.com/v/t51.75761-15/488877709_18355253095195372_2862241119092923725_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=106&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiRkVFRC5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=h56TonPxYUoQ7kNvwFAz4NA&_nc_oc=AdnbYgbh_Y4KBJoED5imfl8J1UZ23h5Ha9iSYaHrN7OUY9g5-pQS1kQrCqVRoLMlgvQ&_nc_zt=23&_nc_ht=scontent-ord5-3.cdninstagram.com&edm=ANQ71j8EAAAA&_nc_gid=usFB0XbJf2vRJkjiElPFnQ&oh=00_Afl8WEJHnbMGI7dfkrCVLJKo7RdtdlzJIfO6YfdB87m6wg&oe=695B3E04',
+      image: getAssetPath('images/backgrounds/indoor.jpg'),
       type: 'post'
     }
   ]

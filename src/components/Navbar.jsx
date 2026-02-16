@@ -14,9 +14,9 @@ const Navbar = ({ openLocationModal }) => {
 
   const navLinks = [
     { name: 'MENU', to: 'menu' },
+    { name: 'LOCATIONS', to: 'locations' },
     { name: 'CATERING', to: 'catering' },
     { name: 'ABOUT US', to: 'about' },
-    { name: 'LOCATIONS', to: 'locations' },
     { name: 'CONTACT', to: 'contact' }
   ]
 

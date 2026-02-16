@@ -13,6 +13,7 @@ export default function Catering() {
   });
 
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState(false);
   const [honeypot, setHoneypot] = useState('');
 
   const handleChange = (e) => {
@@ -59,10 +60,10 @@ export default function Catering() {
         });
         setTimeout(() => setSubmitted(false), 2000);
       }
-    } catch (error) {
-      console.error('Error:', error);
-      setSubmitted(true);
-      setTimeout(() => setSubmitted(false), 2000);
+    } catch (err) {
+      console.error('Error:', err);
+      setError(true);
+      setTimeout(() => setError(false), 3000);
     }
   };
 
@@ -94,11 +95,25 @@ export default function Catering() {
   ];
 
   return (
-    <section id="catering" className="section-padding bg-gray-50">
-      <div className="container-custom">
+    <section id="catering" className="relative section-padding overflow-hidden">
+      {/* Background Image */}
+      <div className="absolute inset-0 z-0">
+        <div
+          className="absolute w-full h-full"
+          style={{
+            backgroundImage: `url(${getAssetPath('images/backgrounds/hero-empanadas.jpg')})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center center',
+            backgroundRepeat: 'no-repeat',
+          }}
+        />
+        <div className="absolute inset-0 bg-black/60"></div>
+      </div>
+
+      <div className="container-custom relative z-10">
         {/* Header */}
         <div className="text-center mb-16">
-          <h2 className="heading-lg text-primary-dark mb-4">
+          <h2 className="heading-lg text-white mb-4">
             Catering Services
           </h2>
         </div>
@@ -290,10 +305,15 @@ export default function Catering() {
             <div className="pt-4">
               <button
                 type="submit"
-                className="w-full bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-3 px-6 rounded-lg transition-colors"
+                className={`w-full font-bold py-3 px-6 rounded-lg transition-colors ${
+                  error ? 'bg-red-600 hover:bg-red-700 text-white' : 'bg-cyan-600 hover:bg-cyan-700 text-white'
+                }`}
               >
-                {submitted ? 'Request Sent!' : 'Send Request'}
+                {submitted ? '✓ Request Sent!' : error ? 'Error — Try Again' : 'Send Request'}
               </button>
+              {error && (
+                <p className="text-red-500 text-sm text-center mt-2">Something went wrong. Please try again later.</p>
+              )}
             </div>
           </form>
         </div>
