@@ -21,6 +21,15 @@ const Menu = ({ openLocationModal }) => {
             />
           </div>
 
+          {/* Order Now CTA */}
+          <div className="text-center">
+            <button
+              onClick={openLocationModal}
+              className="px-12 py-4 bg-[#10b5cb] text-white font-bold text-xl rounded-lg hover:bg-opacity-90 transition-all transform hover:scale-105 shadow-lg"
+            >
+              Order Now
+            </button>
+          </div>
         </div>
       </div>
     </section>

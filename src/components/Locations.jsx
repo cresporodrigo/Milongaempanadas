@@ -1,11 +1,32 @@
 import React, { useState, useEffect } from 'react'
 import { getAssetPath } from '../config'
 
+// Get current time in Pacific Time (San Diego)
+const getPacificTime = () => {
+  const now = new Date()
+  // Convert to Pacific Time using Intl API
+  const options = { timeZone: 'America/Los_Angeles', hour12: false, weekday: 'short', hour: 'numeric', minute: 'numeric' }
+  const parts = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'America/Los_Angeles',
+    weekday: 'short',
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: false,
+  }).formatToParts(now)
+
+  const weekdayStr = parts.find(p => p.type === 'weekday').value
+  const hour = parseInt(parts.find(p => p.type === 'hour').value, 10)
+  const minute = parseInt(parts.find(p => p.type === 'minute').value, 10)
+
+  const dayMap = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 }
+  return { day: dayMap[weekdayStr], hours: hour, minutes: minute }
+}
+
 // Get current open/closed status and next event
 const getLocationStatus = (hours) => {
-  const now = new Date()
-  const day = now.getDay() // 0=Sun, 1=Mon...
-  const currentMinutes = now.getHours() * 60 + now.getMinutes()
+  const pt = getPacificTime()
+  const day = pt.day // 0=Sun, 1=Mon...
+  const currentMinutes = pt.hours * 60 + pt.minutes
 
   // Parse hours array into structured schedule
   const schedule = {}
