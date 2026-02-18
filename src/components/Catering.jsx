@@ -13,7 +13,8 @@ export default function Catering() {
   });
 
   const [submitted, setSubmitted] = useState(false);
-  const [error, setError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
   const [honeypot, setHoneypot] = useState('');
 
   const handleChange = (e) => {
@@ -49,6 +50,7 @@ export default function Catering() {
 
       if (response.ok) {
         setSubmitted(true);
+        setIsLoading(false);
         setFormData({
           fullName: '',
           email: '',
@@ -62,8 +64,9 @@ export default function Catering() {
       }
     } catch (err) {
       console.error('Error:', err);
-      setError(true);
-      setTimeout(() => setError(false), 3000);
+      setError('Something went wrong. Please try again later.');
+      setIsLoading(false);
+      setTimeout(() => setError(''), 3000);
     }
   };
 

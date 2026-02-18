@@ -15,7 +15,6 @@
     height: 100%;
     overflow: auto;
     color-scheme: light only;
-    scroll-behavior: smooth;
     scroll-padding-top: 120px;
   }
 
@@ -67,17 +66,9 @@
       display: none !important;
     }
 
-    /* Disable transforms and effects that may cause rendering issues on Chrome mobile */
-    *:not(nav):not(nav *) {
+    /* Prevent will-change from causing rendering issues on Chrome mobile */
+    * {
       will-change: auto !important;
-      transform: none !important;
-      -webkit-transform: none !important;
-    }
-
-    /* Keep navbar transforms working */
-    nav {
-      transform: translateZ(0) !important;
-      -webkit-transform: translateZ(0) !important;
     }
   }
 
@@ -177,5 +168,18 @@
 
   .text-shadow {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  }
+
+  .sidebar-slide-in {
+    animation: slideIn 0.3s ease-out;
+  }
+
+  @keyframes slideIn {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(0);
+    }
   }
 }

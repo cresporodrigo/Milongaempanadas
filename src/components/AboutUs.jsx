@@ -1,4 +1,3 @@
-import React from 'react'
 import { getAssetPath } from '../config'
 
 const AboutUs = () => {

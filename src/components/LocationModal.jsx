@@ -1,9 +1,18 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const LocationModal = ({ isOpen, onClose }) => {
   const [address, setAddress] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
+
+  // Reset state when modal opens/closes
+  useEffect(() => {
+    if (isOpen) {
+      setAddress('')
+      setError('')
+      setIsLoading(false)
+    }
+  }, [isOpen])
 
   // Location configuration with coordinates
   const locations = [

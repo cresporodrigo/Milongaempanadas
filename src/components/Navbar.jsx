@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { getAssetPath } from '../config'
 
 const Navbar = ({ openLocationModal }) => {
@@ -11,6 +11,18 @@ const Navbar = ({ openLocationModal }) => {
   const closeMenu = () => {
     setIsMenuOpen(false)
   }
+
+  // Lock body scroll when sidebar is open
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [isMenuOpen])
 
   const navLinks = [
     { name: 'MENU', to: 'menu' },
@@ -94,7 +106,7 @@ const Navbar = ({ openLocationModal }) => {
           ></div>
 
           {/* Menu Panel */}
-          <div className="absolute left-0 top-0 bottom-0 w-80 bg-white shadow-2xl transform transition-transform duration-300 translate-x-0 z-10">
+          <div className="absolute left-0 top-0 bottom-0 w-80 bg-white shadow-2xl sidebar-slide-in z-10">
           {/* Menu Header */}
           <div className="flex items-center justify-between p-6 border-b border-gray-100">
             <div className="flex items-center">

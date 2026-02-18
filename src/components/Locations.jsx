@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { getAssetPath } from '../config'
 
 // Get current time in Pacific Time (San Diego)
@@ -62,8 +62,18 @@ const getLocationStatus = (hours) => {
       const start = dayNames[dayList[0]]
       const end = dayNames[dayList[1]]
       if (start !== undefined && end !== undefined) {
-        for (let i = start; i <= end; i++) {
-          schedule[i] = { open: openH * 60, close: closeH * 60 }
+        if (start <= end) {
+          for (let i = start; i <= end; i++) {
+            schedule[i] = { open: openH * 60, close: closeH * 60 }
+          }
+        } else {
+          // Handle wrap-around (e.g., Fri–Sun: 5,6,0)
+          for (let i = start; i <= 6; i++) {
+            schedule[i] = { open: openH * 60, close: closeH * 60 }
+          }
+          for (let i = 0; i <= end; i++) {
+            schedule[i] = { open: openH * 60, close: closeH * 60 }
+          }
         }
       }
     } else {
@@ -250,8 +260,8 @@ const Locations = () => {
         </div>
 
         <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-          {locations.map((location, index) => (
-            <LocationCard key={index} {...location} />
+          {locations.map((location) => (
+            <LocationCard key={location.name} {...location} />
           ))}
         </div>
       </div>
