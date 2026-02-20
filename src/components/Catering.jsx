@@ -281,21 +281,62 @@ export default function Catering() {
                 />
               </div>
 
-              {/* Event Date */}
+              {/* Event Date (MM / DD / YYYY) */}
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
                   Event Date *
                 </label>
-                <input
-                  type="date"
-                  name="eventDate"
-                  lang="en-US"
-                  value={formData.eventDate}
-                  onChange={handleChange}
-                  required
-                  min={new Date().toISOString().split('T')[0]}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-200"
-                />
+                <div className="grid grid-cols-3 gap-2">
+                  <select
+                    name="eventMonth"
+                    value={formData.eventDate ? formData.eventDate.split('-')[1] : ''}
+                    onChange={(e) => {
+                      const month = e.target.value;
+                      const parts = (formData.eventDate || '--').split('-');
+                      setFormData(prev => ({ ...prev, eventDate: `${parts[0] || ''}-${month}-${parts[2] || ''}` }));
+                    }}
+                    required
+                    className="w-full px-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-200"
+                  >
+                    <option value="">Month</option>
+                    {['January','February','March','April','May','June','July','August','September','October','November','December'].map((m, i) => (
+                      <option key={m} value={String(i + 1).padStart(2, '0')}>{m}</option>
+                    ))}
+                  </select>
+                  <select
+                    name="eventDay"
+                    value={formData.eventDate ? formData.eventDate.split('-')[2] : ''}
+                    onChange={(e) => {
+                      const day = e.target.value;
+                      const parts = (formData.eventDate || '--').split('-');
+                      setFormData(prev => ({ ...prev, eventDate: `${parts[0] || ''}-${parts[1] || ''}-${day}` }));
+                    }}
+                    required
+                    className="w-full px-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-200"
+                  >
+                    <option value="">Day</option>
+                    {Array.from({ length: 31 }, (_, i) => (
+                      <option key={i + 1} value={String(i + 1).padStart(2, '0')}>{i + 1}</option>
+                    ))}
+                  </select>
+                  <select
+                    name="eventYear"
+                    value={formData.eventDate ? formData.eventDate.split('-')[0] : ''}
+                    onChange={(e) => {
+                      const year = e.target.value;
+                      const parts = (formData.eventDate || '--').split('-');
+                      setFormData(prev => ({ ...prev, eventDate: `${year}-${parts[1] || ''}-${parts[2] || ''}` }));
+                    }}
+                    required
+                    className="w-full px-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-200"
+                  >
+                    <option value="">Year</option>
+                    {Array.from({ length: 3 }, (_, i) => {
+                      const y = new Date().getFullYear() + i;
+                      return <option key={y} value={y}>{y}</option>;
+                    })}
+                  </select>
+                </div>
               </div>
             </div>
 
