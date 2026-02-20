@@ -3,33 +3,33 @@ import { getAssetPath } from '../config'
 const InstagramFeed = () => {
   const instagramPosts = [
     {
-      url: 'https://www.instagram.com/p/DQxWMMcEcm-/',
-      image: getAssetPath('images/backgrounds/hero-empanadas.jpg'),
-      type: 'post'
-    },
-    {
-      url: 'https://www.instagram.com/reel/DO6vmqpEuMW/',
-      image: getAssetPath('images/features/local.jpg'),
-      type: 'reel'
-    },
-    {
-      url: 'https://www.instagram.com/p/DJuvsXoBSdm/',
-      image: getAssetPath('images/backgrounds/menu.jpg'),
-      type: 'post'
-    },
-    {
       url: 'https://www.instagram.com/p/DJm9XxvhLiN/',
-      image: getAssetPath('images/backgrounds/our-story.jpg'),
+      image: getAssetPath('images/instagram/post1.jpg'),
       type: 'post'
     },
     {
-      url: 'https://www.instagram.com/p/DIeuPu5zLiY/',
-      image: getAssetPath('images/locations/fashion-valley.jpg'),
+      url: 'https://www.instagram.com/p/DH6iI9EBPkq/',
+      image: getAssetPath('images/instagram/post2.jpg'),
       type: 'post'
     },
     {
       url: 'https://www.instagram.com/p/DIMnwyThmAf/',
-      image: getAssetPath('images/backgrounds/indoor.jpg'),
+      image: getAssetPath('images/instagram/post3.jpg'),
+      type: 'post'
+    },
+    {
+      url: 'https://www.instagram.com/p/DIeuPu5zLiY/',
+      image: getAssetPath('images/instagram/post4.jpg'),
+      type: 'post'
+    },
+    {
+      url: 'https://www.instagram.com/p/DG6QpDwS5kl/',
+      image: getAssetPath('images/instagram/post5.jpg'),
+      type: 'post'
+    },
+    {
+      url: 'https://www.instagram.com/p/DGgcjocy1HQ/',
+      image: getAssetPath('images/instagram/post6.jpg'),
       type: 'post'
     }
   ]
