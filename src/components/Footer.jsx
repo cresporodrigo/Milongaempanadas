@@ -26,7 +26,7 @@ const Footer = ({ openLocationModal }) => {
     setSubmitStatus('')
 
     try {
-      const response = await fetch('https://formspree.io/f/xvgoeyzo', {
+      const response = await fetch('https://formsubmit.co/ajax/fashionvalley@milongaempanadas.com', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -36,7 +36,8 @@ const Footer = ({ openLocationModal }) => {
           name: formData.name,
           email: formData.email,
           message: formData.message,
-          _to: 'fashionvalley@milongaempanadas.com'
+          _subject: `Contact Message from ${formData.name}`,
+          _template: 'table'
         })
       })
 

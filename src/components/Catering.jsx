@@ -29,22 +29,27 @@ export default function Catering() {
     e.preventDefault();
     // Anti-spam honeypot check
     if (honeypot) return;
+
+    setIsLoading(true);
+    setError('');
+
     try {
-      const response = await fetch('https://formspree.io/f/xvgoeyzo', {
+      const response = await fetch('https://formsubmit.co/ajax/fashionvalley@milongaempanadas.com', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          fullName: formData.fullName,
+          name: formData.fullName,
           email: formData.email,
           phone: formData.phone,
           eventType: formData.eventType,
           guests: formData.guests,
           eventDate: formData.eventDate,
           details: formData.details,
-          _to: 'fashionvalley@milongaempanadas.com'
+          _subject: `Catering Request from ${formData.fullName}`,
+          _template: 'table'
         })
       })
 
@@ -60,13 +65,17 @@ export default function Catering() {
           eventDate: '',
           details: '',
         });
-        setTimeout(() => setSubmitted(false), 2000);
+        setTimeout(() => setSubmitted(false), 5000);
+      } else {
+        setError('Something went wrong. Please try again.');
+        setIsLoading(false);
+        setTimeout(() => setError(''), 5000);
       }
     } catch (err) {
       console.error('Error:', err);
-      setError('Something went wrong. Please try again later.');
+      setError('Network error. Please check your connection and try again.');
       setIsLoading(false);
-      setTimeout(() => setError(''), 3000);
+      setTimeout(() => setError(''), 5000);
     }
   };
 
@@ -280,9 +289,11 @@ export default function Catering() {
                 <input
                   type="date"
                   name="eventDate"
+                  lang="en-US"
                   value={formData.eventDate}
                   onChange={handleChange}
                   required
+                  min={new Date().toISOString().split('T')[0]}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-200"
                 />
               </div>
@@ -308,11 +319,12 @@ export default function Catering() {
             <div className="pt-4">
               <button
                 type="submit"
-                className={`w-full font-bold py-3 px-6 rounded-lg transition-colors ${
-                  error ? 'bg-red-600 hover:bg-red-700 text-white' : 'bg-cyan-600 hover:bg-cyan-700 text-white'
+                disabled={isLoading}
+                className={`w-full font-bold py-3 px-6 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${
+                  error ? 'bg-red-600 hover:bg-red-700 text-white' : submitted ? 'bg-green-600 text-white' : 'bg-cyan-600 hover:bg-cyan-700 text-white'
                 }`}
               >
-                {submitted ? '✓ Request Sent!' : error ? 'Error — Try Again' : 'Send Request'}
+                {isLoading ? 'Sending...' : submitted ? '✓ Request Sent!' : error ? 'Error — Try Again' : 'Send Request'}
               </button>
               {error && (
                 <p className="text-red-500 text-sm text-center mt-2">Something went wrong. Please try again later.</p>
