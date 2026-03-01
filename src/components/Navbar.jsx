@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { getAssetPath } from '../config'
 
 const Navbar = ({ openLocationModal }) => {
@@ -25,11 +26,12 @@ const Navbar = ({ openLocationModal }) => {
   }, [isMenuOpen])
 
   const navLinks = [
-    { name: 'MENU', to: 'menu' },
-    { name: 'LOCATIONS', to: 'locations' },
-    { name: 'CATERING', to: 'catering' },
-    { name: 'ABOUT US', to: 'about' },
-    { name: 'CONTACT', to: 'contact' }
+    { name: 'HOME', to: '/', isRoute: true },
+    { name: 'MENU', to: '/#menu' },
+    { name: 'LOCATIONS', to: '/#locations' },
+    { name: 'CATERING', to: '/catering', isRoute: true },
+    { name: 'ABOUT US', to: '/#about' },
+    { name: 'CONTACT', to: '/#contact' }
   ]
 
   return (
@@ -60,8 +62,8 @@ const Navbar = ({ openLocationModal }) => {
             </button>
 
             {/* Logo - Center on mobile, Left on desktop */}
-            <a
-              href="#hero"
+            <Link
+              to="/"
               className="cursor-pointer lg:relative absolute left-1/2 lg:left-0 transform -translate-x-1/2 lg:translate-x-0 lg:order-1"
             >
               <img
@@ -69,19 +71,29 @@ const Navbar = ({ openLocationModal }) => {
                 alt="Milonga Empanadas Logo"
                 className="h-10 md:h-12 w-auto"
               />
-            </a>
+            </Link>
 
             {/* Desktop Menu - Hidden on mobile */}
             <div className="hidden lg:flex items-center space-x-6 lg:order-2 lg:ml-auto">
-              {navLinks.map((link) => (
-                <a
-                  key={link.name}
-                  href={`#${link.to}`}
-                  className="text-gray-700 hover:text-teal-600 font-medium transition-colors cursor-pointer"
-                >
-                  {link.name}
-                </a>
-              ))}
+              {navLinks.map((link) =>
+                link.isRoute ? (
+                  <Link
+                    key={link.name}
+                    to={link.to}
+                    className="text-gray-700 hover:text-teal-600 font-medium transition-colors cursor-pointer"
+                  >
+                    {link.name}
+                  </Link>
+                ) : (
+                  <a
+                    key={link.name}
+                    href={link.to}
+                    className="text-gray-700 hover:text-teal-600 font-medium transition-colors cursor-pointer"
+                  >
+                    {link.name}
+                  </a>
+                )
+              )}
               <button
                 onClick={openLocationModal}
                 className="px-6 py-2 bg-[#10b5cb] text-white font-semibold rounded-lg hover:bg-opacity-90 transition-all"
@@ -150,16 +162,27 @@ const Navbar = ({ openLocationModal }) => {
               ORDER NOW
             </button>
             
-            {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={`#${link.to}`}
-                onClick={closeMenu}
-                className="block py-4 px-4 text-lg font-medium text-gray-700 hover:text-teal-600 hover:bg-teal-50 rounded-lg transition-all cursor-pointer"
-              >
-                {link.name}
-              </a>
-            ))}
+            {navLinks.map((link) =>
+              link.isRoute ? (
+                <Link
+                  key={link.name}
+                  to={link.to}
+                  onClick={closeMenu}
+                  className="block py-4 px-4 text-lg font-medium text-gray-700 hover:text-teal-600 hover:bg-teal-50 rounded-lg transition-all cursor-pointer"
+                >
+                  {link.name}
+                </Link>
+              ) : (
+                <a
+                  key={link.name}
+                  href={link.to}
+                  onClick={closeMenu}
+                  className="block py-4 px-4 text-lg font-medium text-gray-700 hover:text-teal-600 hover:bg-teal-50 rounded-lg transition-all cursor-pointer"
+                >
+                  {link.name}
+                </a>
+              )
+            )}
           </div>
 
           {/* Menu Footer */}
