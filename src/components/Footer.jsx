@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { getAssetPath } from '../config'
 
 const Footer = ({ openLocationModal }) => {
@@ -26,7 +26,7 @@ const Footer = ({ openLocationModal }) => {
     setSubmitStatus('')
 
     try {
-      const response = await fetch('https://formspree.io/f/xvgoeyzo', {
+      const response = await fetch('https://formsubmit.co/ajax/hola@milongaempanadas.com', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -36,7 +36,8 @@ const Footer = ({ openLocationModal }) => {
           name: formData.name,
           email: formData.email,
           message: formData.message,
-          _to: 'fashionvalley@milongaempanadas.com'
+          _subject: `Contact Message from ${formData.name}`,
+          _template: 'table'
         })
       })
 
@@ -76,7 +77,7 @@ const Footer = ({ openLocationModal }) => {
               </div>
             </a>
             <p className="text-gray-400">
-              Authentic Argentine empanadas handmade from scratch with love and tradition.
+              Premium handcrafted Argentine empanadas near Fashion Valley, San Diego. Mess-free catering for offices, weddings & events.
             </p>
           </div>
 
@@ -134,8 +135,8 @@ const Footer = ({ openLocationModal }) => {
                   <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
                   <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
                 </svg>
-                <a href="mailto:fashionvalley@milongaempanadas.com" className="hover:text-teal-400 transition-colors">
-                  fashionvalley@milongaempanadas.com
+                <a href="mailto:hola@milongaempanadas.com" className="hover:text-teal-400 transition-colors">
+                  hola@milongaempanadas.com
                 </a>
               </div>
               <div className="flex items-center space-x-3">

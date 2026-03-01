@@ -66,7 +66,7 @@
       display: none !important;
     }
 
-    /* Reduce GPU overhead on mobile but keep transforms/animations working */
+    /* Prevent will-change from causing rendering issues on Chrome mobile */
     * {
       will-change: auto !important;
     }
@@ -168,5 +168,18 @@
 
   .text-shadow {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  }
+
+  .sidebar-slide-in {
+    animation: slideIn 0.3s ease-out;
+  }
+
+  @keyframes slideIn {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(0);
+    }
   }
 }

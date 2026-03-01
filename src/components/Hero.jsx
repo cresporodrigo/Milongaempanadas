@@ -26,10 +26,12 @@ const Hero = ({ openLocationModal }) => {
       <div className="relative z-10 text-center px-4 fade-in pt-20">
         {/* ARTISANAL Logo with Scale Animation */}
         <div className="mb-6 animate-fade-in-scale">
+          <h1 className="sr-only">Milonga Empanadas — Premium Handcrafted Argentine Empanadas & Catering in San Diego</h1>
           <img
             src={getAssetPath('images/backgrounds/artisanal.png')}
-            alt="Artisanal"
+            alt="Milonga Empanadas — Artisanal Argentine Empanadas, San Diego"
             className="w-48 md:w-72 lg:w-80 h-auto mx-auto drop-shadow-2xl"
+            fetchPriority="high"
             style={{
               filter: 'drop-shadow(0 10px 30px rgba(0, 0, 0, 0.5))',
             }}
