@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 
 const CateringCTA = () => {
   return (
-    <section className="relative py-16 md:py-20 overflow-hidden" style={{ backgroundColor: '#E09A7A' }}>
+    <section className="relative py-16 md:py-20 overflow-hidden" style={{ backgroundColor: '#F08D66' }}>
       {/* Background pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute inset-0" style={{
@@ -28,7 +28,7 @@ const CateringCTA = () => {
             <Link
               to="/catering"
               className="inline-flex items-center gap-3 px-8 py-4 bg-white font-bold text-lg rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 group"
-              style={{ color: '#E09A7A' }}
+              style={{ color: '#F08D66' }}
             >
               Order Catering
               <svg 

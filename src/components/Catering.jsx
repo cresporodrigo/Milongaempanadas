@@ -1,29 +1,85 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { getAssetPath } from '../config';
 
-/* ─── reusable image cell ─── */
-const ImgCell = ({ src, alt, className = '' }) => (
-  <div className={`relative overflow-hidden rounded-2xl group ${className}`}>
+/* ─── Reveal-on-scroll wrapper ─── */
+const Reveal = ({ children, className = '', delay = 0 }) => {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const obs = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) { setVisible(true); obs.disconnect(); } },
+      { threshold: 0.15 }
+    );
+    if (ref.current) obs.observe(ref.current);
+    return () => obs.disconnect();
+  }, []);
+  return (
     <div
-      className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-110"
-      style={{ backgroundImage: `url(${getAssetPath(src)})` }}
-    />
-    {/* subtle vignette */}
-    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-  </div>
+      ref={ref}
+      className={`transition-all duration-700 ease-out ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'} ${className}`}
+      style={{ transitionDelay: `${delay}ms` }}
+    >{children}</div>
+  );
+};
+
+/* ─── Check icon ─── */
+const CheckIcon = () => (
+  <svg className="w-5 h-5 text-[#00A8E1] flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+  </svg>
 );
 
+/* ─── Subtle background pattern ─── */
+const bgPattern = `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`;
+
+/* ─── Static data ─── */
+const plans = [
+  {
+    name: 'The Quick Bite',
+    price: '$17',
+    features: [
+      '2 empanadas per person (mix & match any flavors).',
+      '1 fresh side per person.',
+      'Delivered ready-to-eat in our branded boxes.',
+      'Perfect for quick office lunches, casual meetings, or small gatherings.',
+    ],
+  },
+  {
+    name: 'The Argentina Classic',
+    price: '$22',
+    popular: true,
+    features: [
+      '3 empanadas per person (mix & match any flavors).',
+      '1 fresh side per person.',
+      'Delivered & set up on disposable platters.',
+      'Ideal for birthdays, family celebrations, team events, or corporate lunches.',
+    ],
+  },
+  {
+    name: 'The Full Experience',
+    price: '$28',
+    features: [
+      '3 empanadas per person (mix & match any flavors).',
+      '1 fresh side per person.',
+      '1 sweet bite per person (Chocotorta).',
+      'Delivered & set up — perfect for weddings, large parties, or any special occasion.',
+    ],
+  },
+];
+
+const flavors = [
+  { name: 'Criolla', desc: 'Steak · Onion · Olives · Boiled egg', img: 'images/instagram/post1.jpg' },
+  { name: 'Ham & Cheese', desc: 'Honey baked ham · Mozzarella · Olive oil · Fresh thyme', img: 'images/instagram/post2.jpg' },
+  { name: 'Chicken', desc: 'Braised chicken · Caramelized onions · Roasted bell peppers · Fine herbs', img: 'images/instagram/post3.jpg' },
+  { name: 'Cheese & Onion', desc: 'Caramelized onion · Chives · Mozzarella · Provolone', img: 'images/instagram/post4.jpg' },
+  { name: 'Spinach Ricotta', desc: 'Ricotta · Nutmeg · Parmesan · Touch of Mozzarella', img: 'images/instagram/post5.jpg' },
+  { name: 'Caprese', desc: 'Seasonal tomatoes · Basil pesto · Mozzarella', img: 'images/instagram/post6.jpg' },
+];
+
 export default function Catering() {
-  /* ── form state (unchanged) ── */
+  /* ── form state ── */
   const [formData, setFormData] = useState({
-    fullName: '',
-    companyName: '',
-    email: '',
-    phone: '',
-    eventType: 'Corporate Lunch',
-    guests: '',
-    eventDate: '',
-    details: '',
+    fullName: '', email: '', phone: '', pack: 'The Argentina Classic', guests: '', details: '',
   });
   const [submitted, setSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -35,305 +91,368 @@ export default function Catering() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const selectPlan = (planName) => {
+    setFormData((prev) => ({ ...prev, pack: planName }));
+    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (honeypot) return;
     setIsLoading(true);
     setError('');
     try {
-      const response = await fetch(
-        'https://formsubmit.co/ajax/hola@milongaempanadas.com',
-        {
-          method: 'POST',
-          headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            name: formData.fullName,
-            company: formData.companyName,
-            email: formData.email,
-            phone: formData.phone,
-            eventType: formData.eventType,
-            guests: formData.guests,
-            eventDate: formData.eventDate,
-            details: formData.details,
-            _subject: `Catering Request from ${formData.fullName}${formData.companyName ? ` (${formData.companyName})` : ''}`,
-            _template: 'table',
-          }),
-        }
-      );
-      if (response.ok) {
+      const res = await fetch('https://formsubmit.co/ajax/hola@milongaempanadas.com', {
+        method: 'POST',
+        headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.fullName,
+          email: formData.email,
+          phone: formData.phone,
+          pack: formData.pack,
+          guests: formData.guests,
+          details: formData.details,
+          _subject: `Catering — ${formData.pack} — ${formData.fullName}`,
+          _template: 'table',
+        }),
+      });
+      if (res.ok) {
         setSubmitted(true);
         setIsLoading(false);
-        setFormData({ fullName: '', companyName: '', email: '', phone: '', eventType: 'Corporate Lunch', guests: '', eventDate: '', details: '' });
-        setTimeout(() => setSubmitted(false), 5000);
+        setFormData({ fullName: '', email: '', phone: '', pack: 'The Argentina Classic', guests: '', details: '' });
+        setTimeout(() => setSubmitted(false), 6000);
       } else {
         setError('Something went wrong. Please try again.');
         setIsLoading(false);
         setTimeout(() => setError(''), 5000);
       }
-    } catch (err) {
-      console.error('Error:', err);
-      setError('Network error. Please check your connection and try again.');
+    } catch {
+      setError('Network error. Please check your connection.');
       setIsLoading(false);
       setTimeout(() => setError(''), 5000);
     }
   };
 
-  const eventTypes = ['Corporate Lunch', 'Team Building Event', 'Office Happy Hour', 'Wedding Reception', 'Private Party', 'Birthday / Anniversary', 'Non-Profit / Fundraiser', 'Other'];
-
-  /* ─────────────────────── RENDER ─────────────────────── */
+  /* ═══════════════════════ RENDER ═══════════════════════ */
   return (
-    <div className="bg-[#F5F0EB] min-h-screen">
+    <div className="bg-[#0a0a0a] text-white -mt-16 md:-mt-20">
 
-      {/* ══════════════════ 4 × 3 EDITORIAL GRID ══════════════════ */}
-      <section className="max-w-[1400px] mx-auto px-3 sm:px-4 lg:px-6 py-6 md:py-10">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 auto-rows-[minmax(280px,1fr)] md:auto-rows-[minmax(340px,1fr)]">
-
-          {/* ═══════════ ROW 1 — EL GANCHO Y LA HISTORIA ═══════════ */}
-
-          {/* Cell 1 · Text — Hero's Secret Weapon */}
-          <div className="bg-[#2C3E50] rounded-2xl p-8 md:p-10 flex flex-col justify-center relative overflow-hidden">
-            {/* decorative accent */}
-            <div className="absolute top-0 left-0 w-24 h-24 bg-[#E09A7A]/10 rounded-full -translate-x-1/2 -translate-y-1/2" />
-            <span className="text-[#E09A7A] text-xs tracking-[0.35em] uppercase font-sans font-semibold mb-4 relative z-10">
-              Premium Catering · San Diego
-            </span>
-            <h1 className="text-3xl md:text-4xl lg:text-[2.7rem] font-display uppercase tracking-wider text-white leading-tight mb-5 relative z-10">
-              Mess-Free<br />Gourmet Catering
-            </h1>
-            <p className="text-white/75 text-sm md:text-base leading-relaxed font-sans relative z-10">
-              Skip the <em className="text-[#E09A7A] not-italic font-semibold">boring pizza trays</em>. Handcrafted Argentine empanadas — zero utensils, zero cleanup. Just grab, bite & impress. Your office, wedding, or event deserves better.
-            </p>
-          </div>
-
-          {/* Cell 2 · Image — Hero shot empanadas */}
-          <ImgCell
-            src="images/backgrounds/hero-empanadas.jpg"
-            alt="Empanadas artesanales calientes"
+      {/* ══════════════════ HERO ══════════════════ */}
+      <section className="relative h-screen flex items-center overflow-hidden bg-black">
+        <div className="absolute inset-0 z-0">
+          <img
+            src={getAssetPath('images/backgrounds/hero-empanadas.jpg')}
+            alt="Milonga Catering"
+            className="w-full h-full object-cover opacity-50"
+            style={{ filter: 'grayscale(20%)' }}
           />
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black" />
+        </div>
 
-          {/* Cell 3 · Text — Nuestra Historia */}
-          <div className="bg-white rounded-2xl p-8 md:p-10 flex flex-col justify-center relative overflow-hidden">
-            <div className="absolute bottom-0 right-0 w-32 h-32 bg-[#E09A7A]/8 rounded-full translate-x-1/3 translate-y-1/3" />
-            <span className="text-[#1BA9A9] text-xs tracking-[0.35em] uppercase font-sans font-semibold mb-4">
-              Chef-Driven
-            </span>
-            <h2 className="text-2xl md:text-3xl font-display uppercase tracking-wider text-[#2C3E50] leading-tight mb-4">
-              Handcrafted<br />Daily
+        <div className="container mx-auto px-6 relative z-10 pt-20">
+          <div className="max-w-5xl">
+            <Reveal>
+              <span className="text-[#00A8E1] font-black uppercase text-xs tracking-[0.5em] mb-4 block">
+                Events &amp; Celebrations
+              </span>
+            </Reveal>
+
+            <Reveal delay={100}>
+              <h1 className="text-7xl md:text-[11rem] leading-[0.75] font-display mb-8 tracking-tighter text-white uppercase">
+                CATE<br />
+                <span className="text-transparent" style={{ WebkitTextStroke: '1.5px white' }}>RING.</span>
+              </h1>
+            </Reveal>
+
+            <Reveal delay={200}>
+              <p className="text-xl md:text-3xl italic font-heading max-w-xl text-zinc-300 mb-12">
+                Bringing the soul of Argentina to San Diego. Premium finger food designed to impress.
+              </p>
+            </Reveal>
+
+            <Reveal delay={300}>
+              <div className="flex flex-wrap gap-4">
+                <a
+                  href="#contact"
+                  className="bg-[#00A8E1] text-white px-10 py-5 font-black uppercase text-base
+                             transition-all duration-300 hover:-translate-x-1 hover:-translate-y-1
+                             hover:shadow-[8px_8px_0px_#ffffff] inline-block tracking-tight"
+                >
+                  Get a Quote
+                </a>
+                <a
+                  href="#flavors"
+                  className="border border-white/30 text-white px-8 py-5 font-black uppercase text-xs
+                             hover:bg-white hover:text-black transition-all duration-300 inline-flex items-center"
+                >
+                  See Menu
+                </a>
+                <a
+                  href="https://www.ezcater.com/catering/milonga-empanadas-3"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-white text-black px-8 py-5 font-black uppercase text-xs
+                             hover:bg-[#00A8E1] hover:text-white transition-all duration-300 inline-flex items-center"
+                >
+                  Order Now on EZCater
+                </a>
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* ══════════════════ CATERING PACKS ══════════════════ */}
+      <section id="plans" className="py-16 md:py-20 bg-zinc-950" style={{ backgroundImage: bgPattern, scrollMarginTop: '80px' }}>
+        <div className="container mx-auto px-6 mb-10 md:mb-14">
+          <Reveal>
+            <h2 className="text-4xl md:text-7xl font-display mb-4 tracking-tight">
+              Catering <span className="text-[#00A8E1]">Packs.</span>
             </h2>
-            <p className="text-gray-600 text-sm md:text-base leading-relaxed font-sans">
-              Premium fast-casual. Every empanada made fresh by Chef <span className="font-semibold text-[#2C3E50]">Matías Bienati</span> near Fashion Valley, San Diego. Healthy ingredients, artisanal technique — no shortcuts.
+          </Reveal>
+          <Reveal delay={100}>
+            <p className="italic font-heading text-xl md:text-2xl text-zinc-400">
+              Select the experience that best fits your event.
             </p>
-          </div>
+          </Reveal>
+        </div>
 
-          {/* ═══════════ ROW 2 — CORPORATE EFFICIENCY ═══════════ */}
-
-          {/* Cell 4 · Image — Empanadas en oficina */}
-          <ImgCell
-            src="images/instagram/post1.jpg"
-            alt="Empanadas artesanales Milonga"
-          />
-
-          {/* Cell 5 · Card — Corporate & Team Events (EZCater) */}
-          <div className="bg-[#1A1A1A] rounded-2xl p-8 md:p-10 flex flex-col justify-center relative overflow-hidden">
-            <div className="absolute -top-6 -right-6 w-28 h-28 border-2 border-[#1BA9A9]/20 rounded-full" />
-            <div className="absolute -bottom-4 -left-4 w-20 h-20 border border-[#1BA9A9]/10 rounded-full" />
-            <span className="text-[#1BA9A9] text-xs tracking-[0.35em] uppercase font-sans font-semibold mb-3 relative z-10">
-              Office Lunch Catering
-            </span>
-            <h3 className="text-2xl md:text-3xl font-display uppercase tracking-wider text-white leading-tight mb-4 relative z-10">
-              Feed the<br />Whole Team
-            </h3>
-            <p className="text-white/70 text-sm leading-relaxed font-sans mb-6 relative z-10">
-              No plates. No utensils. No mess. Just order, unwrap & impress the whole office. Perfect finger food for meetings, team lunches & all-hands — delivered hot near Fashion Valley.
-            </p>
-            <a
-              href="https://www.ezcater.com/catering/milonga-empanadas-3"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2.5 self-start bg-[#1BA9A9] hover:bg-[#138A8A] text-white font-bold py-3 px-7 rounded-xl text-sm transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-[#1BA9A9]/25 font-sans relative z-10"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
-              Order via EZCater
-            </a>
-          </div>
-
-          {/* Cell 6 · Image — Close-up repulgue */}
-          <ImgCell
-            src="images/instagram/post2.jpg"
-            alt="Close-up del repulgue artesanal"
-          />
-
-          {/* ═══════════ ROW 3 — CUSTOM EXPERIENCE ═══════════ */}
-
-          {/* Cell 7 · Card — Milonga Experience */}
-          <div className="bg-[#E09A7A] rounded-2xl p-8 md:p-10 flex flex-col justify-center relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-full translate-x-1/2 -translate-y-1/2" />
-            <span className="text-white/80 text-xs tracking-[0.35em] uppercase font-sans font-semibold mb-3 relative z-10">
-              Weddings & Private Events
-            </span>
-            <h3 className="text-2xl md:text-3xl font-display uppercase tracking-wider text-white leading-tight mb-4 relative z-10">
-              The Milonga<br />Experience
-            </h3>
-            <p className="text-white/85 text-sm leading-relaxed font-sans mb-6 relative z-10">
-              Curated menus with fresh salads, artisan <span className="font-semibold">Chocotorta</span>, and optional on-site staff. Luxury finger food catering — beautifully plated, zero cleanup required.
-            </p>
-            <a
-              href="#custom-request"
-              className="inline-flex items-center gap-2.5 self-start bg-white text-[#E09A7A] hover:bg-[#2C3E50] hover:text-white font-bold py-3 px-7 rounded-xl text-sm transition-all duration-300 hover:scale-105 hover:shadow-lg font-sans relative z-10"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-              </svg>
-              Inquire Now
-            </a>
-          </div>
-
-          {/* Cell 8 · Image — Sides & Chocotorta */}
-          <ImgCell
-            src="images/instagram/post3.jpg"
-            alt="Sides frescos y Chocotorta"
-          />
-
-          {/* Cell 9 · Text — Bespoke Flavor */}
-          <div className="bg-white rounded-2xl p-8 md:p-10 flex flex-col justify-center">
-            <span className="text-[#E09A7A] text-xs tracking-[0.35em] uppercase font-sans font-semibold mb-4">
-              Fully Customizable
-            </span>
-            <h3 className="text-2xl md:text-3xl font-display uppercase tracking-wider text-[#2C3E50] leading-tight mb-4">
-              Build Your<br />Perfect Menu
-            </h3>
-            <p className="text-gray-600 text-sm md:text-base leading-relaxed font-sans mb-4">
-              Mix & match empanadas with fresh seasonal salads, artisan desserts & craft beverages. <span className="italic">Healthy options included</span> — from intimate dinners to 500+ guest celebrations.
-            </p>
-            <div className="flex flex-wrap gap-2 mt-1">
-              {['Empanadas', 'Fresh Salads', 'Chocotorta', 'Craft Drinks', 'On-Site Staff'].map((tag) => (
-                <span key={tag} className="text-xs font-sans font-medium bg-[#F5F0EB] text-[#2C3E50] px-3 py-1.5 rounded-full">
-                  {tag}
-                </span>
-              ))}
-            </div>
-          </div>
-
-          {/* ═══════════ ROW 4 — EL CIERRE ═══════════ */}
-
-          {/* Cell 10 · Image — Gente disfrutando */}
-          <ImgCell
-            src="images/instagram/post4.jpg"
-            alt="Gente disfrutando empanadas"
-          />
-
-          {/* Cell 11 · Form CTA — Inquire Now */}
-          <div id="custom-request" className="bg-[#2C3E50] rounded-2xl p-7 md:p-9 flex flex-col justify-center" style={{ scrollMarginTop: '100px' }}>
-            <h3 className="text-xl md:text-2xl font-display uppercase tracking-wider text-white mb-1.5">
-              Inquire Now
-            </h3>
-            <p className="text-white/60 text-xs font-sans mb-4">
-              Your event, our flavor. ¡A bailar esas papilas gustativas!
-            </p>
-
-            <form onSubmit={handleSubmit} className="space-y-2.5">
-              <input type="text" name="_gotcha" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} style={{ display: 'none' }} tabIndex="-1" autoComplete="off" />
-
-              <input
-                type="text" name="fullName" value={formData.fullName} onChange={handleChange} required
-                placeholder="Your name"
-                className="w-full px-3.5 py-2.5 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/40 text-sm font-sans focus:outline-none focus:border-[#E09A7A] focus:ring-1 focus:ring-[#E09A7A]/30 transition-colors"
-              />
-              <input
-                type="text" name="companyName" value={formData.companyName} onChange={handleChange}
-                placeholder="Company / Organization (optional)"
-                className="w-full px-3.5 py-2.5 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/40 text-sm font-sans focus:outline-none focus:border-[#E09A7A] focus:ring-1 focus:ring-[#E09A7A]/30 transition-colors"
-              />
-              <input
-                type="email" name="email" value={formData.email} onChange={handleChange} required
-                placeholder="Work email"
-                className="w-full px-3.5 py-2.5 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/40 text-sm font-sans focus:outline-none focus:border-[#E09A7A] focus:ring-1 focus:ring-[#E09A7A]/30 transition-colors"
-              />
-              <input
-                type="tel" name="phone" value={formData.phone} onChange={handleChange} required
-                placeholder="Phone"
-                className="w-full px-3.5 py-2.5 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/40 text-sm font-sans focus:outline-none focus:border-[#E09A7A] focus:ring-1 focus:ring-[#E09A7A]/30 transition-colors"
-              />
-              <select
-                name="eventType" value={formData.eventType} onChange={handleChange}
-                className="w-full px-3.5 py-2.5 bg-white/10 border border-white/20 rounded-lg text-white text-sm font-sans focus:outline-none focus:border-[#E09A7A] focus:ring-1 focus:ring-[#E09A7A]/30 transition-colors [&>option]:text-gray-900"
+        <div className="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
+          {plans.map((plan, i) => (
+            <Reveal key={plan.name} delay={i * 150} className="h-full">
+              <div
+                className={`bg-zinc-900/50 p-10 md:p-12 rounded-[2rem] flex flex-col h-full
+                           transition-all duration-500 hover:scale-[1.02] relative
+                           ${plan.popular
+                             ? 'border-2 border-[#00A8E1] hover:bg-[#00A8E1]/5'
+                             : 'border border-[#00A8E1]/20 hover:border-[#00A8E1] hover:bg-[#00A8E1]/5'
+                           }`}
               >
-                {eventTypes.map((t) => <option key={t} value={t}>{t}</option>)}
-              </select>
-              <div className="grid grid-cols-2 gap-2.5">
-                <input
-                  type="number" name="guests" value={formData.guests} onChange={handleChange} required min="1"
-                  placeholder="# Guests"
-                  className="w-full px-3.5 py-2.5 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/40 text-sm font-sans focus:outline-none focus:border-[#E09A7A] focus:ring-1 focus:ring-[#E09A7A]/30 transition-colors"
-                />
-                <input
-                  type="date" name="eventDate" value={formData.eventDate} onChange={handleChange} required
-                  className="w-full px-3.5 py-2.5 bg-white/10 border border-white/20 rounded-lg text-white text-sm font-sans focus:outline-none focus:border-[#E09A7A] focus:ring-1 focus:ring-[#E09A7A]/30 transition-colors [color-scheme:dark]"
-                />
-              </div>
-              <textarea
-                name="details" value={formData.details} onChange={handleChange} required rows="2"
-                placeholder="Tell us about your event..."
-                className="w-full px-3.5 py-2.5 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/40 text-sm font-sans focus:outline-none focus:border-[#E09A7A] focus:ring-1 focus:ring-[#E09A7A]/30 transition-colors resize-none"
-              />
-              <button
-                type="submit" disabled={isLoading}
-                className={`w-full font-bold py-3 rounded-xl text-sm font-sans transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed hover:scale-[1.02] hover:shadow-lg ${
-                  error ? 'bg-red-500 text-white' : submitted ? 'bg-green-500 text-white' : 'bg-[#E09A7A] hover:bg-[#d08868] text-white hover:shadow-[#E09A7A]/25'
-                }`}
-              >
-                {isLoading ? 'Sending...' : submitted ? '✓ Sent!' : error ? 'Error — Retry' : 'Send Request'}
-              </button>
-              {error && <p className="text-red-400 text-xs text-center font-sans">Something went wrong. Try again.</p>}
-            </form>
-          </div>
+                {plan.popular && (
+                  <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#00A8E1] text-black font-black uppercase text-[10px] px-6 py-2 rounded-full tracking-widest whitespace-nowrap">
+                    Most Popular
+                  </div>
+                )}
 
-          {/* Cell 12 · Text — 3 Steps to Victory */}
-          <div className="bg-[#F5F0EB] rounded-2xl p-8 md:p-10 flex flex-col justify-center border border-[#e8ddd1]">
-            <span className="text-[#1BA9A9] text-xs tracking-[0.35em] uppercase font-sans font-semibold mb-5">
-              How it works
-            </span>
-            <h3 className="text-2xl md:text-3xl font-display uppercase tracking-wider text-[#2C3E50] leading-tight mb-7">
-              3 Steps to<br />Victory
-            </h3>
+                <span className="font-display text-2xl md:text-3xl mb-2 uppercase tracking-tight">{plan.name}</span>
 
-            <div className="space-y-5">
-              {/* Step 1 */}
-              <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-[#2C3E50] flex items-center justify-center">
-                  <span className="text-white font-display text-lg">1</span>
+                <div className="flex items-baseline gap-1 mb-8">
+                  <span className="text-xs font-bold text-zinc-500 uppercase">From</span>
+                  <span className="text-4xl font-black text-[#00A8E1]">{plan.price}</span>
+                  <span className="text-zinc-500 font-bold uppercase text-[10px]">P/P</span>
                 </div>
-                <div>
-                  <p className="font-sans font-semibold text-[#2C3E50] text-sm">Tell Us Your Headcount</p>
-                  <p className="font-sans text-gray-500 text-xs mt-0.5">10 or 500 — we scale to any size event.</p>
+
+                <ul className="space-y-5 flex-grow text-zinc-400 text-sm leading-relaxed">
+                  {plan.features.map((f, j) => (
+                    <li key={j} className="flex gap-3">
+                      <CheckIcon />
+                      <span>{f}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      {/* ══════════════════ SELECTION OF FLAVORS ══════════════════ */}
+      <section id="flavors" className="py-16 md:py-20 bg-black" style={{ scrollMarginTop: '80px' }}>
+        <div className="container mx-auto px-6 mb-10 md:mb-14 text-center">
+          <Reveal>
+            <h2 className="text-4xl md:text-5xl font-display mb-4 uppercase tracking-tighter">
+              Magic <span className="text-[#00A8E1]">Flavors.</span>
+            </h2>
+          </Reveal>
+          <div className="w-24 h-1 bg-[#00A8E1] mx-auto" />
+        </div>
+
+        <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+          {flavors.map((f, i) => (
+            <Reveal key={f.name} delay={i * 100}>
+              <div className="bg-[#18181b] border border-white/5 rounded-[2.5rem] overflow-hidden group
+                             transition-all duration-400 hover:border-[#00A8E1]">
+                <div className="h-64 overflow-hidden">
+                  <img
+                    src={getAssetPath(f.img)}
+                    alt={`${f.name} empanada`}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="p-8 text-center">
+                  <h4 className="text-xl font-black mb-2 uppercase tracking-tighter italic">{f.name}</h4>
+                  <p className="text-zinc-500 text-sm">{f.desc}</p>
                 </div>
               </div>
-              {/* Step 2 */}
-              <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-[#E09A7A] flex items-center justify-center">
-                  <span className="text-white font-display text-lg">2</span>
-                </div>
-                <div>
-                  <p className="font-sans font-semibold text-[#2C3E50] text-sm">We Craft & Deliver Hot</p>
-                  <p className="font-sans text-gray-500 text-xs mt-0.5">Handmade fresh that morning. Arrives ready to serve.</p>
-                </div>
-              </div>
-              {/* Step 3 */}
-              <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-[#1BA9A9] flex items-center justify-center">
-                  <span className="text-white font-display text-lg">3</span>
-                </div>
-                <div>
-                  <p className="font-sans font-semibold text-[#2C3E50] text-sm">Zero Cleanup Required</p>
-                  <p className="font-sans text-gray-500 text-xs mt-0.5">No plates, no utensils. You just take the credit.</p>
-                </div>
+            </Reveal>
+          ))}
+        </div>
+
+        {/* Dessert & Extras */}
+        <div className="container mx-auto px-6 mt-10 md:mt-14 grid grid-cols-1 md:grid-cols-3 gap-8">
+          <Reveal>
+            <div className="bg-zinc-900/50 p-10 rounded-[2rem] border border-zinc-800 text-center h-full">
+              <h3 className="italic font-heading text-3xl mb-6 text-[#00A8E1]">Dessert</h3>
+              <div className="flex flex-col items-center gap-4">
+                <img
+                  src={getAssetPath('images/instagram/post6.jpg')}
+                  alt="Chocotorta"
+                  className="w-24 h-24 rounded-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
+                  loading="lazy"
+                />
+                <h4 className="font-black uppercase italic text-sm">Chocotorta</h4>
+                <p className="text-zinc-500 text-sm">Dulce de leche cream mixed with coffee-soaked cookies.</p>
               </div>
             </div>
-          </div>
+          </Reveal>
+          <Reveal delay={100}>
+            <div className="bg-zinc-900/50 p-10 rounded-[2rem] border border-zinc-800 flex flex-col justify-center text-center h-full">
+              <h3 className="italic font-heading text-3xl mb-4 text-[#00A8E1]">Sides</h3>
+              <p className="text-zinc-500 text-sm uppercase font-black tracking-widest mb-2">Fresh Seasonal Sides</p>
+              <p className="text-zinc-600 text-xs italic">Crafted to complement every bite.</p>
+            </div>
+          </Reveal>
+          <Reveal delay={200}>
+            <div className="bg-zinc-900/50 p-10 rounded-[2rem] border border-zinc-800 flex flex-col justify-center text-center h-full">
+              <h3 className="italic font-heading text-3xl mb-4 text-[#00A8E1]">Salads</h3>
+              <p className="text-zinc-500 text-sm uppercase font-black tracking-widest mb-2">Artisanal Salads</p>
+              <p className="text-zinc-600 text-xs italic">Fresh locally sourced ingredients.</p>
+            </div>
+          </Reveal>
+        </div>
+      </section>
 
-        </div>{/* end grid */}
+      {/* ══════════════════ CONTACT / BOOKING FORM ══════════════════ */}
+      <section id="contact" className="py-16 md:py-20 bg-zinc-950" style={{ scrollMarginTop: '80px' }}>
+        <div className="container mx-auto px-6">
+          <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 bg-zinc-900 rounded-[2rem] md:rounded-[4rem] overflow-hidden shadow-2xl">
+
+            {/* ── Left blue panel ── */}
+            <div className="bg-[#00A8E1] p-10 md:p-16 lg:p-20 text-black flex flex-col justify-between">
+              <div>
+                <Reveal>
+                  <h2 className="text-4xl md:text-5xl font-display leading-none mb-8 uppercase tracking-tight">
+                    Let&apos;s<br />Talk.
+                  </h2>
+                </Reveal>
+                <Reveal delay={100}>
+                  <p className="text-black/80 font-medium text-base md:text-lg mb-12">
+                    From intimate gatherings to massive weddings in San Diego. Tell us what you have in mind and we&apos;ll bring the flavor.
+                  </p>
+                </Reveal>
+              </div>
+              <Reveal delay={200}>
+                <div className="space-y-5 font-black uppercase text-xs tracking-[0.15em]">
+                  <p className="flex items-center gap-4">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+                    </svg>
+                    (619) 985-7592
+                  </p>
+                  <p className="flex items-center gap-4">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                      <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                    </svg>
+                    hola@milongaempanadas.com
+                  </p>
+                  <p className="flex items-center gap-4">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+                    </svg>
+                    San Diego, California
+                  </p>
+                </div>
+              </Reveal>
+            </div>
+
+            {/* ── Right dark form panel ── */}
+            <div className="p-8 md:p-16 lg:p-20">
+              <form onSubmit={handleSubmit} className="space-y-8 md:space-y-10">
+                {/* honeypot */}
+                <input type="text" name="_gotcha" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} style={{ display: 'none' }} tabIndex="-1" autoComplete="off" />
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 md:gap-10">
+                  <div>
+                    <label className="text-[10px] font-black text-zinc-600 uppercase tracking-widest mb-2 block">Name</label>
+                    <input
+                      type="text" name="fullName" value={formData.fullName} onChange={handleChange} required
+                      className="w-full bg-transparent border-b border-zinc-800 py-3 outline-none focus:border-[#00A8E1] transition text-white"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-[10px] font-black text-zinc-600 uppercase tracking-widest mb-2 block">Email</label>
+                    <input
+                      type="email" name="email" value={formData.email} onChange={handleChange} required
+                      className="w-full bg-transparent border-b border-zinc-800 py-3 outline-none focus:border-[#00A8E1] transition text-white"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 md:gap-10">
+                  <div>
+                    <label className="text-[10px] font-black text-zinc-600 uppercase tracking-widest mb-2 block">Pack Selection</label>
+                    <select
+                      name="pack" value={formData.pack} onChange={handleChange}
+                      className="w-full bg-transparent border-b border-zinc-800 py-3 outline-none focus:border-[#00A8E1] transition text-zinc-400 font-bold uppercase text-[11px] [&>option]:text-gray-900"
+                    >
+                      <option value="The Quick Bite">The Quick Bite</option>
+                      <option value="The Argentina Classic">The Argentina Classic</option>
+                      <option value="The Full Experience">The Full Experience</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="text-[10px] font-black text-zinc-600 uppercase tracking-widest mb-2 block">Guests</label>
+                    <input
+                      type="number" name="guests" value={formData.guests} onChange={handleChange} required min="1"
+                      className="w-full bg-transparent border-b border-zinc-800 py-3 outline-none focus:border-[#00A8E1] transition text-white"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="text-[10px] font-black text-zinc-600 uppercase tracking-widest mb-2 block">Phone</label>
+                  <input
+                    type="tel" name="phone" value={formData.phone} onChange={handleChange}
+                    className="w-full bg-transparent border-b border-zinc-800 py-3 outline-none focus:border-[#00A8E1] transition text-white"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-[10px] font-black text-zinc-600 uppercase tracking-widest mb-2 block">Message</label>
+                  <textarea
+                    name="details" value={formData.details} onChange={handleChange} rows="3"
+                    placeholder="Tell us about your event..."
+                    className="w-full bg-transparent border-b border-zinc-800 py-3 outline-none focus:border-[#00A8E1] transition text-white resize-none placeholder-zinc-700"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  className={`w-full py-5 md:py-6 font-black uppercase text-lg tracking-tight
+                             transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer
+                             ${submitted
+                               ? 'bg-green-500 text-white'
+                               : error
+                                 ? 'bg-red-500 text-white'
+                                 : 'bg-[#00A8E1] text-white hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[8px_8px_0px_#ffffff]'
+                             }`}
+                >
+                  {isLoading ? 'Sending...' : submitted ? '✓ Request Sent!' : error ? 'Error — Retry' : 'Send Request'}
+                </button>
+
+                {submitted && (
+                  <div className="p-4 md:p-6 bg-[#00A8E1]/10 text-[#00A8E1] text-center font-black uppercase text-xs rounded-2xl border border-[#00A8E1]">
+                    Received! We&apos;ll be in touch soon.
+                  </div>
+                )}
+                {error && <p className="text-red-500 text-sm text-center font-semibold">{error}</p>}
+              </form>
+            </div>
+          </div>
+        </div>
       </section>
 
     </div>
