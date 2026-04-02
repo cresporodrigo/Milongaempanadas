@@ -182,8 +182,9 @@ export default function Catering() {
                 </a>
                 <a
                   href="#flavors"
-                  className="border border-white/30 text-white px-8 py-5 font-black uppercase text-xs
-                             hover:bg-white hover:text-black transition-all duration-300 inline-flex items-center"
+                  className="border border-white/30 text-white px-10 py-5 font-black uppercase text-base
+                             transition-all duration-300 hover:-translate-x-1 hover:-translate-y-1
+                             hover:shadow-[8px_8px_0px_#ffffff] hover:bg-white hover:text-black inline-block tracking-tight"
                 >
                   See Menu
                 </a>
@@ -191,8 +192,9 @@ export default function Catering() {
                   href="https://www.ezcater.com/catering/milonga-empanadas-3"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-white text-black px-8 py-5 font-black uppercase text-xs
-                             hover:bg-[#00A8E1] hover:text-white transition-all duration-300 inline-flex items-center"
+                  className="bg-white text-black px-10 py-5 font-black uppercase text-base
+                             transition-all duration-300 hover:-translate-x-1 hover:-translate-y-1
+                             hover:shadow-[8px_8px_0px_#ffffff] hover:bg-[#00A8E1] hover:text-white inline-block tracking-tight"
                 >
                   Order Now on EZCater
                 </a>
