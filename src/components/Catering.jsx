@@ -68,12 +68,12 @@ const plans = [
 ];
 
 const flavors = [
-  { name: 'Criolla', desc: 'Steak · Onion · Olives · Boiled egg', img: 'images/instagram/post1.jpg' },
-  { name: 'Ham & Cheese', desc: 'Honey baked ham · Mozzarella · Olive oil · Fresh thyme', img: 'images/instagram/post2.jpg' },
-  { name: 'Chicken', desc: 'Braised chicken · Caramelized onions · Roasted bell peppers · Fine herbs', img: 'images/instagram/post3.jpg' },
-  { name: 'Cheese & Onion', desc: 'Caramelized onion · Chives · Mozzarella · Provolone', img: 'images/instagram/post4.jpg' },
-  { name: 'Spinach Ricotta', desc: 'Ricotta · Nutmeg · Parmesan · Touch of Mozzarella', img: 'images/instagram/post5.jpg' },
-  { name: 'Caprese', desc: 'Seasonal tomatoes · Basil pesto · Mozzarella', img: 'images/instagram/post6.jpg' },
+  { name: 'Criolla', desc: 'Steak · Onion · Olives · Boiled egg', img: 'images/flavors/criolla.jpg' },
+  { name: 'Ham & Cheese', desc: 'Honey baked ham · Mozzarella · Olive oil · Fresh thyme', img: 'images/flavors/ham-and-cheese.jpg' },
+  { name: 'Chicken', desc: 'Braised chicken · Caramelized onions · Roasted bell peppers · Fine herbs', img: 'images/flavors/chicken.jpg' },
+  { name: 'Cheese & Onion', desc: 'Caramelized onion · Chives · Mozzarella · Provolone', img: 'images/flavors/cheese-and-onion.jpg' },
+  { name: 'Spinach Ricotta', desc: 'Ricotta · Nutmeg · Parmesan · Touch of Mozzarella', img: 'images/flavors/spinach-ricotta.jpg' },
+  { name: 'Caprese', desc: 'Seasonal tomatoes · Basil pesto · Mozzarella', img: 'images/flavors/caprese.jpg' },
 ];
 
 export default function Catering() {
