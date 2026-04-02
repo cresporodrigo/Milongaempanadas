@@ -42,12 +42,17 @@ const AboutUs = () => {
                 src={getAssetPath('images/logos/empanada-icon.png')}
                 alt="Empanada icon"
                 className="absolute top-8 right-8 w-20 h-20 z-10 animate-bounce opacity-90"
+                loading="lazy"
+                width="80"
+                height="80"
               />
               <img
                 src={getAssetPath('images/backgrounds/our-story.jpg')}
                 alt="Chef Matías Bienati handcrafting Argentine empanadas at Milonga, San Diego"
                 className="w-full h-[500px] object-cover transform hover:scale-105 transition-transform duration-500"
                 loading="lazy"
+                width="600"
+                height="500"
               />
             </div>
           </div>

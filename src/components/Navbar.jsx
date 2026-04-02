@@ -70,6 +70,8 @@ const Navbar = ({ openLocationModal }) => {
                 src={getAssetPath('images/logos/logo-main.png')}
                 alt="Milonga Empanadas Logo"
                 className="h-10 md:h-12 w-auto"
+                width="120"
+                height="48"
               />
             </Link>
 
@@ -126,6 +128,8 @@ const Navbar = ({ openLocationModal }) => {
                 src={getAssetPath('images/logos/logo-main.png')}
                 alt="Milonga Empanadas Logo"
                 className="h-12 w-auto"
+                width="120"
+                height="48"
               />
             </div>
             <button

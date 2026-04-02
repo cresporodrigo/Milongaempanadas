@@ -32,6 +32,8 @@ const Hero = ({ openLocationModal }) => {
             alt="Milonga Empanadas — Artisanal Argentine Empanadas, San Diego"
             className="w-48 md:w-72 lg:w-80 h-auto mx-auto drop-shadow-2xl"
             fetchPriority="high"
+            width="320"
+            height="320"
             style={{
               filter: 'drop-shadow(0 10px 30px rgba(0, 0, 0, 0.5))',
             }}
@@ -48,7 +50,7 @@ const Hero = ({ openLocationModal }) => {
 
       {/* Scroll Down Indicator */}
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10 animate-bounce">
-        <a href="#menu" className="cursor-pointer">
+        <a href="#menu" className="cursor-pointer" aria-label="Scroll down to menu">
           <svg
             className="w-6 h-6 text-white"
             fill="none"

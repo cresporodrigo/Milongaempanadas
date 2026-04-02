@@ -158,9 +158,11 @@ const LocationCard = ({ name, address, hours, image, mapsUrl }) => {
       <div className="h-64 overflow-hidden relative">
         <img
           src={image}
-          alt={`${name} location`}
+          alt={`${name} location — Milonga Empanadas`}
           className="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500"
           loading="lazy"
+          width="600"
+          height="256"
         />
         {/* Open/Closed Badge */}
         <div className={`absolute top-4 right-4 px-4 py-2 rounded-full text-sm font-bold shadow-lg flex items-center space-x-2 ${

@@ -52,6 +52,10 @@ function ScrollToTop() {
 }
 
 function HomePage({ openLocationModal }) {
+  useEffect(() => {
+    document.title = 'Milonga Empanadas — Premium Handcrafted Argentine Catering & Empanadas in San Diego'
+  }, [])
+
   return (
     <>
       <Hero openLocationModal={openLocationModal} />
@@ -65,6 +69,21 @@ function HomePage({ openLocationModal }) {
 }
 
 function CateringPage() {
+  useEffect(() => {
+    document.title = 'Catering — Milonga Empanadas | Mess-Free Argentine Catering in San Diego'
+    const metaDesc = document.querySelector('meta[name="description"]')
+    if (metaDesc) {
+      metaDesc.setAttribute('data-original', metaDesc.content)
+      metaDesc.content = 'Premium Argentine empanada catering for corporate events, weddings & parties in San Diego. Mess-free finger food — no utensils, no cleanup. Get a quote today.'
+    }
+    return () => {
+      if (metaDesc && metaDesc.getAttribute('data-original')) {
+        metaDesc.content = metaDesc.getAttribute('data-original')
+        metaDesc.removeAttribute('data-original')
+      }
+    }
+  }, [])
+
   return <Catering />
 }
 

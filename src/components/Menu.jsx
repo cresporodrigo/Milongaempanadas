@@ -15,9 +15,11 @@ const Menu = ({ openLocationModal }) => {
           <div className="rounded-2xl overflow-hidden shadow-2xl mb-8 hover:shadow-3xl transition-shadow duration-300">
             <img
               src={getAssetPath('images/backgrounds/menu.jpg')}
-              alt="Milonga Empanadas Menu"
+              alt="Milonga Empanadas full menu — beef, chicken, ham and cheese, spinach ricotta, caprese, and cheese and onion empanadas"
               className="w-full h-auto object-cover"
               loading="lazy"
+              width="896"
+              height="1152"
             />
           </div>
 

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { getAssetPath } from '../config'
 
 const Footer = ({ openLocationModal }) => {
@@ -50,7 +51,6 @@ const Footer = ({ openLocationModal }) => {
         setTimeout(() => setSubmitStatus(''), 5000)
       }
     } catch (error) {
-      console.error('Error:', error)
       setSubmitStatus('error')
       setTimeout(() => setSubmitStatus(''), 5000)
     } finally {
@@ -73,6 +73,9 @@ const Footer = ({ openLocationModal }) => {
                   src={getAssetPath('images/logos/logo-footer.png')}
                   alt="Milonga Empanadas Logo"
                   className="h-16 w-auto"
+                  loading="lazy"
+                  width="160"
+                  height="64"
                 />
               </div>
             </a>
@@ -108,6 +111,14 @@ const Footer = ({ openLocationModal }) => {
                 >
                   Locations
                 </a>
+              </li>
+              <li>
+                <Link
+                  to="/catering"
+                  className="text-gray-400 hover:text-teal-400 transition-colors cursor-pointer inline-block"
+                >
+                  Catering
+                </Link>
               </li>
               <li>
                 <button

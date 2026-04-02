@@ -142,9 +142,12 @@ export default function Catering() {
         <div className="absolute inset-0 z-0">
           <img
             src={getAssetPath('images/backgrounds/hero-empanadas.jpg')}
-            alt="Milonga Catering"
+            alt="Milonga Empanadas catering — premium Argentine finger food for events in San Diego"
             className="w-full h-full object-cover opacity-50"
             style={{ filter: 'grayscale(20%)' }}
+            fetchPriority="high"
+            width="1920"
+            height="1080"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black" />
         </div>
@@ -192,6 +195,7 @@ export default function Catering() {
                   href="https://www.ezcater.com/catering/milonga-empanadas-3"
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label="Order Milonga Empanadas catering on EZCater"
                   className="bg-white text-black px-10 py-5 font-black uppercase text-base
                              transition-all duration-300 hover:-translate-x-1 hover:-translate-y-1
                              hover:shadow-[8px_8px_0px_#ffffff] hover:bg-[#00A8E1] hover:text-white inline-block tracking-tight"
@@ -277,9 +281,11 @@ export default function Catering() {
                 <div className="h-64 overflow-hidden">
                   <img
                     src={getAssetPath(f.img)}
-                    alt={`${f.name} empanada`}
+                    alt={`${f.name} empanada — ${f.desc}`}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                     loading="lazy"
+                    width="400"
+                    height="256"
                   />
                 </div>
                 <div className="p-8 text-center">
@@ -299,9 +305,11 @@ export default function Catering() {
               <div className="flex flex-col items-center gap-4">
                 <img
                   src={getAssetPath('images/instagram/post6.jpg')}
-                  alt="Chocotorta"
+                  alt="Chocotorta — Argentine chocolate dulce de leche dessert"
                   className="w-24 h-24 rounded-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
                   loading="lazy"
+                  width="96"
+                  height="96"
                 />
                 <h4 className="font-black uppercase italic text-sm">Chocotorta</h4>
                 <p className="text-zinc-500 text-sm">Dulce de leche cream mixed with coffee-soaked cookies.</p>
