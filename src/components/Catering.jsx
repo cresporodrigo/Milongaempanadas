@@ -143,13 +143,13 @@ export default function Catering() {
           <img
             src={getAssetPath('images/backgrounds/hero-empanadas.jpg')}
             alt="Milonga Empanadas catering — premium Argentine finger food for events in San Diego"
-            className="w-full h-full object-cover opacity-50"
-            style={{ filter: 'grayscale(20%)' }}
+            className="w-full h-full object-cover"
             fetchPriority="high"
             width="1920"
             height="1080"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/30 to-transparent" />
         </div>
 
         <div className="container mx-auto px-6 relative z-10 pt-20">
@@ -163,13 +163,13 @@ export default function Catering() {
             <Reveal delay={100}>
               <h1 className="text-7xl md:text-[11rem] leading-[0.75] font-display mb-8 tracking-tighter text-white uppercase">
                 CATE<br />
-                <span className="text-transparent" style={{ WebkitTextStroke: '1.5px white' }}>RING.</span>
+                <span className="text-transparent" style={{ WebkitTextStroke: '2px white' }}>RING.</span>
               </h1>
             </Reveal>
 
             <Reveal delay={200}>
-              <p className="text-xl md:text-3xl italic font-heading max-w-xl text-zinc-300 mb-12">
-                Bringing the soul of Argentina to San Diego. Premium finger food designed to impress.
+              <p className="text-xl md:text-3xl italic font-heading max-w-xl text-white/90 mb-12">
+                The ultimate reception food or the best fuel for your team meetings. Handcrafted daily, delivered fresh, bold flavors and zero mess.
               </p>
             </Reveal>
 
