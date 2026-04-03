@@ -68,12 +68,12 @@ const plans = [
 ];
 
 const flavors = [
-  { name: 'Criolla', desc: 'Steak · Onion · Olives · Boiled egg', img: 'images/flavors/criolla.jpg' },
-  { name: 'Ham & Cheese', desc: 'Honey baked ham · Mozzarella · Olive oil · Fresh thyme', img: 'images/flavors/ham-and-cheese.jpg' },
-  { name: 'Chicken', desc: 'Braised chicken · Caramelized onions · Roasted bell peppers · Fine herbs', img: 'images/flavors/chicken.jpg' },
-  { name: 'Cheese & Onion', desc: 'Caramelized onion · Chives · Mozzarella · Provolone', img: 'images/flavors/cheese-and-onion.jpg' },
-  { name: 'Spinach Ricotta', desc: 'Ricotta · Nutmeg · Parmesan · Touch of Mozzarella', img: 'images/flavors/spinach-ricotta.jpg' },
-  { name: 'Caprese', desc: 'Seasonal tomatoes · Basil pesto · Mozzarella', img: 'images/flavors/caprese.jpg' },
+  { name: 'Criolla', desc: 'The original Argentine classic. A delicious combo of steak, onion, olives, hard boiled egg, and savory spices. Juicy, robust, and folded with our signature repulgue.', img: 'images/flavors/criolla.jpg' },
+  { name: 'Ham & Cheese', desc: 'Simple, yet Sophisticated. Premium Honey Baked Ham and melted Mozzarella, elevated with a drizzle of Extra Virgin Olive Oil and fresh thyme. A gourmet twist on the ultimate comfort food.', img: 'images/flavors/ham-and-cheese.jpg' },
+  { name: 'Chicken', desc: 'Braised chicken, caramelized onions, roasted bell peppers and fine herbs.', img: 'images/flavors/chicken.jpg' },
+  { name: 'Cheese & Onion', desc: 'A decadent blend of melted Mozzarella and sharp Provolone cheese, topped with sweet roasted onions and chives. A Buenos Aires Classic.', img: 'images/flavors/cheese-and-onion.jpg' },
+  { name: 'Spinach Ricotta', desc: 'Fresh spinach leaves blended with creamy ricotta, nutmeg, Parmesan and Mozzarella. A sophisticated, silky filling that melts in your mouth. Lighter but full of flavor.', img: 'images/flavors/spinach-ricotta.jpg' },
+  { name: 'Caprese', desc: 'Italian Heritage, Argentine Soul. Fresh seasonal tomatoes paired with melted Mozzarella and our signature basil pesto. A vibrant, aromatic bite that brings the freshness of the Mediterranean to your table.', img: 'images/flavors/caprese.jpg' },
 ];
 
 export default function Catering() {
@@ -192,7 +192,7 @@ export default function Catering() {
                   See Menu
                 </a>
                 <a
-                  href="https://www.ezcater.com/catering/milonga-empanadas-3"
+                  href="https://www.ezcater.com/catering/milonga-empanadas-3?fulfillmentDetailId=5e8b8ec1-0973-41c3-8a9f-bb6aecc5732d"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Order Milonga Empanadas catering on EZCater"
@@ -301,18 +301,18 @@ export default function Catering() {
         <div className="container mx-auto px-6 mt-10 md:mt-14 grid grid-cols-1 md:grid-cols-3 gap-8">
           <Reveal>
             <div className="bg-zinc-900/50 p-10 rounded-[2rem] border border-zinc-800 text-center h-full">
-              <h3 className="italic font-heading text-3xl mb-6 text-[#00A8E1]">Dessert</h3>
+              <h3 className="italic font-heading text-3xl mb-6 text-[#00A8E1]">Salads</h3>
               <div className="flex flex-col items-center gap-4">
                 <img
-                  src={getAssetPath('images/instagram/post6.jpg')}
-                  alt="Chocotorta — Argentine chocolate dulce de leche dessert"
-                  className="w-24 h-24 rounded-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
+                  src={getAssetPath('images/flavors/salads.png')}
+                  alt="Artisanal fresh salad — locally sourced ingredients"
+                  className="w-40 h-40 rounded-full object-cover transition-all duration-500 hover:scale-105"
                   loading="lazy"
-                  width="96"
-                  height="96"
+                  width="160"
+                  height="160"
                 />
-                <h4 className="font-black uppercase italic text-sm">Chocotorta</h4>
-                <p className="text-zinc-500 text-sm">Dulce de leche cream mixed with coffee-soaked cookies.</p>
+                <h4 className="font-black uppercase italic text-sm">Artisanal Salads</h4>
+                <p className="text-zinc-500 text-sm">Fresh locally sourced ingredients.</p>
               </div>
             </div>
           </Reveal>
@@ -324,10 +324,20 @@ export default function Catering() {
             </div>
           </Reveal>
           <Reveal delay={200}>
-            <div className="bg-zinc-900/50 p-10 rounded-[2rem] border border-zinc-800 flex flex-col justify-center text-center h-full">
-              <h3 className="italic font-heading text-3xl mb-4 text-[#00A8E1]">Salads</h3>
-              <p className="text-zinc-500 text-sm uppercase font-black tracking-widest mb-2">Artisanal Salads</p>
-              <p className="text-zinc-600 text-xs italic">Fresh locally sourced ingredients.</p>
+            <div className="bg-zinc-900/50 p-10 rounded-[2rem] border border-zinc-800 text-center h-full">
+              <h3 className="italic font-heading text-3xl mb-6 text-[#00A8E1]">Dessert</h3>
+              <div className="flex flex-col items-center gap-4">
+                <img
+                  src={getAssetPath('images/flavors/chocotorta.jpg')}
+                  alt="Chocotorta — Argentine chocolate dulce de leche dessert"
+                  className="w-40 h-40 rounded-full object-cover transition-all duration-500 hover:scale-105"
+                  loading="lazy"
+                  width="160"
+                  height="160"
+                />
+                <h4 className="font-black uppercase italic text-sm">Chocotorta</h4>
+                <p className="text-zinc-500 text-sm">Dulce de leche cream mixed with coffee-soaked cookies.</p>
+              </div>
             </div>
           </Reveal>
         </div>
@@ -339,7 +349,7 @@ export default function Catering() {
           <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 bg-zinc-900 rounded-[2rem] md:rounded-[4rem] overflow-hidden shadow-2xl">
 
             {/* ── Left blue panel ── */}
-            <div className="bg-[#00A8E1] p-10 md:p-16 lg:p-20 text-black flex flex-col justify-between">
+            <div className="bg-[#00A8E1] p-10 md:p-16 lg:p-20 text-black flex flex-col justify-center items-center text-center">
               <div>
                 <Reveal>
                   <h2 className="text-4xl md:text-5xl font-display leading-none mb-8 uppercase tracking-tight">
@@ -347,28 +357,31 @@ export default function Catering() {
                   </h2>
                 </Reveal>
                 <Reveal delay={100}>
-                  <p className="text-black/80 font-medium text-base md:text-lg mb-12">
+                  <p className="text-black/80 font-medium text-base md:text-lg mb-4">
                     From intimate gatherings to massive weddings in San Diego. Tell us what you have in mind and we&apos;ll bring the flavor.
+                  </p>
+                  <p className="text-black/70 text-sm md:text-base mb-12 italic">
+                    Need a custom menu or something special? Let us know — we&apos;ll make it happen.
                   </p>
                 </Reveal>
               </div>
               <Reveal delay={200}>
                 <div className="space-y-5 font-black uppercase text-xs tracking-[0.15em]">
                   <p className="flex items-center gap-4">
-                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                       <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
                     </svg>
                     (619) 985-7592
                   </p>
                   <p className="flex items-center gap-4">
-                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                       <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
                       <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
                     </svg>
                     hola@milongaempanadas.com
                   </p>
                   <p className="flex items-center gap-4">
-                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
                     </svg>
                     San Diego, California
