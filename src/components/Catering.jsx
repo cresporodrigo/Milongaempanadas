@@ -80,7 +80,7 @@ const flavors = [
 export default function Catering() {
   /* ── form state ── */
   const [formData, setFormData] = useState({
-    fullName: '', email: '', phone: '', pack: 'The Argentina Classic', guests: '', details: '',
+    fullName: '', email: '', phone: '', details: '',
   });
   const [submitted, setSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -90,11 +90,6 @@ export default function Catering() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const selectPlan = (planName) => {
-    setFormData((prev) => ({ ...prev, pack: planName }));
-    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
   };
 
   const handleSubmit = async (e) => {
@@ -110,17 +105,15 @@ export default function Catering() {
           name: formData.fullName,
           email: formData.email,
           phone: formData.phone,
-          pack: formData.pack,
-          guests: formData.guests,
-          details: formData.details,
-          _subject: `Catering — ${formData.pack} — ${formData.fullName}`,
+          message: formData.details,
+          _subject: `Catering Inquiry — ${formData.fullName}`,
           _template: 'table',
         }),
       });
       if (res.ok) {
         setSubmitted(true);
         setIsLoading(false);
-        setFormData({ fullName: '', email: '', phone: '', pack: 'The Argentina Classic', guests: '', details: '' });
+        setFormData({ fullName: '', email: '', phone: '', details: '' });
         setTimeout(() => setSubmitted(false), 6000);
       } else {
         setError('Something went wrong. Please try again.');
@@ -435,46 +428,24 @@ export default function Catering() {
                 {/* honeypot */}
                 <input type="text" name="_gotcha" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} style={{ display: 'none' }} tabIndex="-1" autoComplete="off" />
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 md:gap-10">
-                  <div>
-                    <label className="text-[10px] font-black text-zinc-600 uppercase tracking-widest mb-2 block">Name</label>
-                    <input
-                      type="text" name="fullName" value={formData.fullName} onChange={handleChange} required
-                      className="w-full bg-transparent border-b border-zinc-800 py-3 outline-none focus:border-[#00A8E1] transition text-white"
-                    />
-                  </div>
-                  <div>
-                    <label className="text-[10px] font-black text-zinc-600 uppercase tracking-widest mb-2 block">Email</label>
-                    <input
-                      type="email" name="email" value={formData.email} onChange={handleChange} required
-                      className="w-full bg-transparent border-b border-zinc-800 py-3 outline-none focus:border-[#00A8E1] transition text-white"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 md:gap-10">
-                  <div>
-                    <label className="text-[10px] font-black text-zinc-600 uppercase tracking-widest mb-2 block">Pack Selection</label>
-                    <select
-                      name="pack" value={formData.pack} onChange={handleChange}
-                      className="w-full bg-transparent border-b border-zinc-800 py-3 outline-none focus:border-[#00A8E1] transition text-zinc-400 font-bold uppercase text-[11px] [&>option]:text-gray-900"
-                    >
-                      <option value="The Quick Bite">The Quick Bite</option>
-                      <option value="The Argentina Classic">The Argentina Classic</option>
-                      <option value="The Full Experience">The Full Experience</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label className="text-[10px] font-black text-zinc-600 uppercase tracking-widest mb-2 block">Guests</label>
-                    <input
-                      type="number" name="guests" value={formData.guests} onChange={handleChange} required min="1"
-                      className="w-full bg-transparent border-b border-zinc-800 py-3 outline-none focus:border-[#00A8E1] transition text-white"
-                    />
-                  </div>
+                <div>
+                  <label className="text-[10px] font-black text-zinc-600 uppercase tracking-widest mb-2 block">Name</label>
+                  <input
+                    type="text" name="fullName" value={formData.fullName} onChange={handleChange} required
+                    className="w-full bg-transparent border-b border-zinc-800 py-3 outline-none focus:border-[#00A8E1] transition text-white"
+                  />
                 </div>
 
                 <div>
-                  <label className="text-[10px] font-black text-zinc-600 uppercase tracking-widest mb-2 block">Phone</label>
+                  <label className="text-[10px] font-black text-zinc-600 uppercase tracking-widest mb-2 block">Email</label>
+                  <input
+                    type="email" name="email" value={formData.email} onChange={handleChange} required
+                    className="w-full bg-transparent border-b border-zinc-800 py-3 outline-none focus:border-[#00A8E1] transition text-white"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-[10px] font-black text-zinc-600 uppercase tracking-widest mb-2 block">Phone <span className="normal-case tracking-normal text-zinc-700">(optional)</span></label>
                   <input
                     type="tel" name="phone" value={formData.phone} onChange={handleChange}
                     className="w-full bg-transparent border-b border-zinc-800 py-3 outline-none focus:border-[#00A8E1] transition text-white"
