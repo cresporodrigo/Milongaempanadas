@@ -71,16 +71,105 @@ function HomePage({ openLocationModal }) {
 function CateringPage() {
   useEffect(() => {
     document.title = 'Catering — Milonga Empanadas | Mess-Free Argentine Catering in San Diego'
+
+    // Update meta description
     const metaDesc = document.querySelector('meta[name="description"]')
     if (metaDesc) {
       metaDesc.setAttribute('data-original', metaDesc.content)
-      metaDesc.content = 'Premium Argentine empanada catering for corporate events, weddings & parties in San Diego. Mess-free finger food — no utensils, no cleanup. Get a quote today.'
+      metaDesc.content = 'Premium Argentine empanada catering for corporate events, weddings & parties in San Diego. Mess-free finger food — no utensils, no cleanup. From $17/person. Get a quote today.'
     }
+
+    // Update canonical URL for /catering
+    const canonical = document.querySelector('link[rel="canonical"]')
+    if (canonical) {
+      canonical.setAttribute('data-original', canonical.href)
+      canonical.href = 'https://milongaempanadas.com/catering'
+    }
+
+    // Update Open Graph tags for /catering (Google Ads landing page quality)
+    const ogTags = {
+      'og:title': 'Catering — Milonga Empanadas | Premium Argentine Catering San Diego',
+      'og:description': 'Mess-free empanada catering from $17/person. Perfect for corporate offices, weddings & events. Handcrafted daily, delivered fresh.',
+      'og:url': 'https://milongaempanadas.com/catering',
+    }
+    const ogOriginals = {}
+    Object.entries(ogTags).forEach(([prop, content]) => {
+      const el = document.querySelector(`meta[property="${prop}"]`)
+      if (el) {
+        ogOriginals[prop] = el.content
+        el.content = content
+      }
+    })
+
+    // Inject catering-specific Schema.org (CateringService + offers)
+    const cateringSchema = document.createElement('script')
+    cateringSchema.type = 'application/ld+json'
+    cateringSchema.id = 'catering-schema'
+    cateringSchema.textContent = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Service',
+      'serviceType': 'Catering',
+      'name': 'Milonga Empanadas Catering',
+      'description': 'Premium Argentine empanada catering for corporate events, weddings, and parties in San Diego. Mess-free finger food delivered and set up.',
+      'provider': {
+        '@type': 'Restaurant',
+        'name': 'Milonga Empanadas',
+        'url': 'https://milongaempanadas.com'
+      },
+      'areaServed': {
+        '@type': 'City',
+        'name': 'San Diego',
+        'addressRegion': 'CA'
+      },
+      'hasOfferCatalog': {
+        '@type': 'OfferCatalog',
+        'name': 'Catering Packs',
+        'itemListElement': [
+          {
+            '@type': 'Offer',
+            'name': 'The Quick Bite',
+            'price': '17',
+            'priceCurrency': 'USD',
+            'description': '2 empanadas + 1 side per person. Perfect for quick office lunches.'
+          },
+          {
+            '@type': 'Offer',
+            'name': 'The Argentina Classic',
+            'price': '22',
+            'priceCurrency': 'USD',
+            'description': '3 empanadas + 1 side per person. Ideal for celebrations and corporate events.'
+          },
+          {
+            '@type': 'Offer',
+            'name': 'The Full Experience',
+            'price': '28',
+            'priceCurrency': 'USD',
+            'description': '3 empanadas + 1 side + chocotorta per person. Perfect for weddings and large events.'
+          }
+        ]
+      }
+    })
+    document.head.appendChild(cateringSchema)
+
     return () => {
+      // Restore meta description
       if (metaDesc && metaDesc.getAttribute('data-original')) {
         metaDesc.content = metaDesc.getAttribute('data-original')
         metaDesc.removeAttribute('data-original')
       }
+      // Restore canonical
+      if (canonical && canonical.getAttribute('data-original')) {
+        canonical.href = canonical.getAttribute('data-original')
+        canonical.removeAttribute('data-original')
+      }
+      // Restore OG tags
+      Object.entries(ogOriginals).forEach(([prop, content]) => {
+        const el = document.querySelector(`meta[property="${prop}"]`)
+        if (el) el.content = content
+      })
+      // Remove catering schema
+      const schemaEl = document.getElementById('catering-schema')
+      if (schemaEl) schemaEl.remove()
     }
   }, [])
 

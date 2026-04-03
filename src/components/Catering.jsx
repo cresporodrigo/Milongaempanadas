@@ -114,6 +114,10 @@ export default function Catering() {
         setSubmitted(true);
         setIsLoading(false);
         setFormData({ fullName: '', email: '', phone: '', details: '' });
+        // Google Ads conversion tracking (fires when gtag is loaded)
+        if (typeof window.gtag === 'function') {
+          window.gtag('event', 'conversion', { send_to: 'AW-XXXXXXXXX/XXXXXXXXXXXXXXX' });
+        }
         setTimeout(() => setSubmitted(false), 6000);
       } else {
         setError('Something went wrong. Please try again.');
@@ -323,7 +327,7 @@ export default function Catering() {
               <h3 className="italic font-heading text-3xl mb-6 text-[#00A8E1]">Salads</h3>
               <div className="flex flex-col items-center gap-4">
                 <img
-                  src={getAssetPath('images/flavors/salads.png')}
+                  src={getAssetPath('images/flavors/salads.jpg')}
                   alt="Artisanal fresh salad — locally sourced ingredients"
                   className="w-40 h-40 rounded-full object-cover transition-all duration-500 hover:scale-105"
                   loading="lazy"
@@ -399,12 +403,6 @@ export default function Catering() {
               </div>
               <Reveal delay={200}>
                 <div className="space-y-5 font-black uppercase text-xs tracking-[0.15em]">
-                  <p className="flex items-center gap-4">
-                    <svg className="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
-                    </svg>
-                    (619) 985-7592
-                  </p>
                   <p className="flex items-center gap-4">
                     <svg className="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                       <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
