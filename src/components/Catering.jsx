@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { getAssetPath } from '../config';
+import InstagramFeed from './InstagramFeed';
 
 /* ─── Reveal-on-scroll wrapper ─── */
 const Reveal = ({ children, className = '', delay = 0 }) => {
@@ -208,6 +209,31 @@ export default function Catering() {
         </div>
       </section>
 
+      {/* ══════════════════ IMAGE TRANSITION ══════════════════ */}
+      <section className="bg-zinc-950 py-10 md:py-14">
+        <div className="container mx-auto px-6 grid grid-cols-3 gap-4 md:gap-6">
+          {[
+            { src: 'images/flavors/pack-3.jpg', alt: 'Empanada catering pack of 3', cls: 'object-[center_30%] brightness-110' },
+            { src: 'images/flavors/pack-12.jpg', alt: 'Empanada catering pack of 12', cls: '' },
+            { src: 'images/flavors/pack-6.jpg', alt: 'Empanada catering pack of 6', cls: '' },
+          ].map((img) => (
+            <div key={img.src} className="relative rounded-2xl overflow-hidden group">
+              <img
+                src={getAssetPath(img.src)}
+                alt={img.alt}
+                className={`w-full h-48 md:h-72 object-cover ${img.cls}`}
+                loading="lazy"
+                width="600"
+                height="288"
+              />
+              {/* White vignette / faded border */}
+              <div className="absolute inset-0 pointer-events-none rounded-2xl"
+                   style={{ boxShadow: 'inset 0 0 30px 10px rgba(255,255,255,0.15)' }} />
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* ══════════════════ CATERING PACKS ══════════════════ */}
       <section id="plans" className="py-16 md:py-20 bg-zinc-950" style={{ backgroundImage: bgPattern, scrollMarginTop: '80px' }}>
         <div className="container mx-auto px-6 mb-10 md:mb-14">
@@ -235,7 +261,7 @@ export default function Catering() {
                            }`}
               >
                 {plan.popular && (
-                  <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#00A8E1] text-black font-black uppercase text-[10px] px-6 py-2 rounded-full tracking-widest whitespace-nowrap">
+                  <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#00A8E1] text-black font-black uppercase text-[10px] px-6 py-2 rounded-full tracking-widest whitespace-nowrap z-10">
                     Most Popular
                   </div>
                 )}
@@ -344,8 +370,21 @@ export default function Catering() {
       </section>
 
       {/* ══════════════════ CONTACT / BOOKING FORM ══════════════════ */}
-      <section id="contact" className="py-16 md:py-20 bg-zinc-950" style={{ scrollMarginTop: '80px' }}>
-        <div className="container mx-auto px-6">
+      <section id="contact" className="relative py-16 md:py-20" style={{ scrollMarginTop: '80px' }}>
+        {/* Background image — same as hero, no gradient */}
+        <div className="absolute inset-0 z-0">
+          <img
+            src={getAssetPath('images/backgrounds/hero-empanadas.jpg')}
+            alt=""
+            aria-hidden="true"
+            className="w-full h-full object-cover"
+            loading="lazy"
+            width="1920"
+            height="1080"
+          />
+          <div className="absolute inset-0 bg-black/70" />
+        </div>
+        <div className="container mx-auto px-6 relative z-10">
           <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 bg-zinc-900 rounded-[2rem] md:rounded-[4rem] overflow-hidden shadow-2xl">
 
             {/* ── Left blue panel ── */}
@@ -477,6 +516,9 @@ export default function Catering() {
           </div>
         </div>
       </section>
+
+      {/* ══════════════════ INSTAGRAM FEED ══════════════════ */}
+      <InstagramFeed />
 
     </div>
   );
